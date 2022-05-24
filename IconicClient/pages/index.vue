@@ -1,19 +1,32 @@
 <template>
-  <header>
-  <div class= "front_reg"></div>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Birthstone+Bounce&display=swap" rel="stylesheet">
-		<link href="http://fonts.cdnfonts.com/css/gotham-pro?styles=24951" rel="stylesheet">
-   <nuxt-link class= "button butReg" to="entrance">Войти</nuxt-link>
-    <nuxt-link class= "button butEntrance " to="registration">Зарегистрироваться</nuxt-link>
+  <main id="main" class="d-flex min-vh-100 mr-auto ml-auto justify-content-center">
+    <div class="d-flex"></div>
 
-    <img id="notebook" src="@/static/images/notebook.png">
-		<p class = "iconic">Iconic</p>
-		<p class = "iconic_down">про твою уникальность</p>
-		<div id = "border"></div>
-		<div id = "reg_background"></div>
-   </header>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Birthstone+Bounce&display=swap" rel="stylesheet">
+    <link href="http://fonts.cdnfonts.com/css/gotham-pro?styles=24951" rel="stylesheet">
+    <div class=" d-flex align-items-center ">
+      <div>
+        <img id="notebook" src="@/static/images/notebook.png">
+      </div>
+      <div id="iconicFull" class="m-5">
+        <div id="iconicLabel" class="container">
+          <p id="iconicTitle" class="ml-4">Iconic</p>
+          <p id="iconicText">про твою уникальность</p>
+        </div>
+        <div id="but" class="container m-4">
+          <form action="/login">
+            <button class="butEntrance">Войти</button>
+          </form>
+          <form action="/registration">
+            <button class="butReg">Зарегистрироваться</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex"></div>
+  </main>
 </template>
 
 <script>
@@ -22,103 +35,80 @@ export default {
 }
 </script>
 
- <style>
- header {
-  min-height: 100vh;
+<style>
+#main {
+  background-color: #E5E5E5;
+}
+
+#notebook {
+  position: center;
+  height: 400px;
+
+}
+
+#iconicLabel {
+  border: 3px solid #383434;
+  border-radius: 18px;
+  margin: 10%;
+  width: 80%;
+  height: 40%;
+
+}
+
+#iconicFull {
+
   background-color: #F1F1F1;
-  background-size: cover;
-  position: relative;
- }
-  .front_reg{
-  position: absolute;
-width: 370px;
-height: 409px;
-left: 811px;
-top: 179px;
-
-background: #FFFFFF;
-border-radius: 10px;
+  border-radius: 18px;
+  width: 400px;
+  height: 450px;
 }
-.iconic {
-	position: absolute;
-width: 250px;
-height: 120px;
-left: 875px;
-top: 210px;
 
-font-family: 'Birthstone Bounce';
-font-style: normal;
-font-weight: 400;
-font-size: 105px;
-line-height: 143px;
+button {
+  font-family: 'Gotham Pro';
+  height: 50px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  margin-left: 30px;
+  margin-top: 20px;
+  width: 70%;
+  border-radius: 18px;
+  border: 0px solid;
+}
 
-color: #383434;
+button:hover {
 
 }
 
-.iconic_down{
-  position: absolute;
-width: 217px;
-height: 17px;
-left: 891px;
-top: 339px;
-
-font-family: 'Gotham Pro';
-font-style: normal;
-font-weight: 400;
-font-size: 18px;
-line-height: 17px;
-
-color: #000000;
-
+.butReg {
+  background-color: rgba(39, 224, 213, 100%);
 }
 
-#border{
-  box-sizing: border-box;
-
-position: absolute;
-width:100%;
-max-width: 291px;
-height: 161px;
-left: 850px;
-top: 218px;
-
-border: 3px solid #383434;
-border-radius: 10px;
+.butReg:hover {
+  background-color: rgba(39, 224, 213, 80%);
 }
 
-#notebook{
-position: absolute;
-height: 365px;
-  margin-top: 200px;
-  margin-left: 120px;
+.butEntrance {
+  background-color: rgba(20, 130, 145, 100%);
 }
 
-  .button{
-position: absolute;
-left: 870px;
-font-size: 16px;
-border-radius: 10px;
-font-family: 'Gotham Pro';
-width: 250px;
-height:50px;
-font-weight:bold;
-text-align: center;
-color: white;
-padding: 13px;
+.butEntrance:hover {
+  background-color: rgba(20, 130, 145, 80%);
 }
 
-.butReg{
-
-  background-color: #27E0D5;
-top: 420px;
-padding-left:20px;
+#iconicTitle {
+  align-items: center;
+  font-family: 'Birthstone Bounce';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 105px;
+  margin-bottom: -30px;
 }
 
-.butEntrance{
-
- background-color: #148291;
-top: 500px;
-padding-left:30px;
+#iconicText {
+  font-family: 'Gotham Pro';
+  margin-left: 40px;
+  font-size: 17px;
 }
+
 </style>
