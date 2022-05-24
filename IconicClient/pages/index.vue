@@ -1,7 +1,6 @@
 <template>
   <main id="main" class="d-flex min-vh-100 mr-auto ml-auto justify-content-center">
     <div class="d-flex"></div>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Birthstone+Bounce&display=swap" rel="stylesheet">
@@ -43,7 +42,6 @@ export default {
 #notebook {
   position: center;
   height: 400px;
-
 }
 
 #iconicLabel {
@@ -52,11 +50,9 @@ export default {
   margin: 10%;
   width: 80%;
   height: 40%;
-
 }
 
 #iconicFull {
-
   background-color: #F1F1F1;
   border-radius: 18px;
   width: 400px;
@@ -74,10 +70,6 @@ button {
   width: 70%;
   border-radius: 18px;
   border: 0px solid;
-}
-
-button:hover {
-
 }
 
 .butReg {
@@ -110,5 +102,4 @@ button:hover {
   margin-left: 40px;
   font-size: 17px;
 }
-
 </style>
