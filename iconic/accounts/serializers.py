@@ -11,7 +11,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
             queryset=CustomUser.objects.all()
         )]
     )
-    password = serializers.CharField(write_only=True) #here we specified the fields that we will return, and also prescribed the possibilities of using
+    # here we specified the fields that we will return, and also prescribed the possibilities of using
+    password = serializers.CharField(write_only=True)
     birth_date = serializers.CharField(required=False)
     bio = serializers.CharField(required=False)
     gender = serializers.CharField(required=False)
@@ -19,7 +20,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(required=False)
     birth_date = serializers.CharField(required=False)
 
-    class Meta: #fields that we return to the client
+    # class to fields that we return to the client
+    class Meta:
         model = CustomUser
         fields = ('first_name', 'last_name', 'email',
                   'password', 'bio', 'gender', 'birth_date')
