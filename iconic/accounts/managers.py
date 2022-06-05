@@ -3,7 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from validate_email import validate_email
 
 
-class CustomUserManager(BaseUserManager):#we are defining a custom user model that will handle user authentication for us.
+class CustomUserManager(BaseUserManager):
+    # we are defining a custom user model that will handle user authentication for us
     def create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError(_('The Email must be set'))
@@ -15,7 +16,8 @@ class CustomUserManager(BaseUserManager):#we are defining a custom user model th
         user.save()
         return user
 
-    def create_superuser(self, email, password, **extra_fields): # superuser
+    # superuser
+    def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
