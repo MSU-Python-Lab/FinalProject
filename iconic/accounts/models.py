@@ -34,4 +34,3 @@ class UserPhoto(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     is_avatar = models.BooleanField(default=False)
     photo = models.ImageField(upload_to=user_directory_path)
-
