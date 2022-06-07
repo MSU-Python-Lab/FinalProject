@@ -1,33 +1,36 @@
-from django.db import models
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-#
+
 from . import managers
 
-#  we will use other models
 
-#class CustomUser(AbstractUser):
-    #username = None
-    #email = models.EmailField(_('email address'), unique=True)
-    #bio = models.TextField()
-    #gender = models.CharField(
-        #max_length=140,
-        #null=True,
-        #choices=(
-        #    ('Male', 'Male'),
-       #     ('Female', 'Female'),
-      #      ('Other', 'Other')
-     #   )
-    #)
-    #birth_date = models.DateField(null=True, blank=True)
-   # pro = models.BooleanField(default=False)
-#
-  #  USERNAME_FIELD = 'email'
- #   REQUIRED_FIELDS = []
-#
- #   objects = managers.CustomUserManager()
-#
-   # def __str__(self):
-  #      return f"{self.email}'s custom account"
+def user_directory_path(instance, filename):
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
+
+
+class CustomUser(AbstractUser):
+    username = None
+    email = models.EmailField(_('email address'), unique=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = managers.CustomUserManager()
+
+    def __str__(self):
+        return f"{self.email}'s custom account"
+
+
+class UserProfile(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    bio = models.TextField()
+
+    def __str__(self):
+        return f"User profile for user {self.user.primary_key}"
+
+
+class UserPhoto(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    is_avatar = models.BooleanField(default=False)
+    photo = models.ImageField(upload_to=user_directory_path)
