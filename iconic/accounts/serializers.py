@@ -1,10 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers, validators
 
-from accounts.models import UserProfile
-
 CustomUser = get_user_model()
-
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -15,16 +12,18 @@ class CustomUserSerializer(serializers.ModelSerializer):
         )]
     )
     password = serializers.CharField(write_only=True)
-    last_name = serializers.CharField(required=False)
-    first_name = serializers.CharField(required=False)
-
+    last_name = serializers.CharField(required=True)
+    first_name = serializers.CharField(required=True)
+    username = serializers.CharField(required=True)
+    phone = serializers.CharField(required=True)
 
     class Meta:
         model = CustomUser
         fields = ('first_name', 'last_name', 'email',
-                  'password')
+                  'password', 'username', 'phone')
 
 
+"""
 class CustomUserRetrieveSerializer(serializers.ModelSerializer):
     bio = serializers.CharField(required=False)
 
@@ -32,3 +31,4 @@ class CustomUserRetrieveSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = ('bio',)
 
+"""

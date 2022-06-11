@@ -10,9 +10,9 @@ def user_directory_path(instance, filename):
 
 
 class CustomUser(AbstractUser):
-    username = None  # it's a login
+    username = models.CharField(max_length=100)  # it's a login
     time_create = models.DateField(auto_now_add=True)
-    last_online = models.DateField(auto_add=True)
+    last_online = models.DateField(auto_now_add=True)
     avatar = models.ImageField(upload_to=user_directory_path)
     email = models.EmailField(_('email address'), unique=True)
     phone = models.CharField(max_length=50)

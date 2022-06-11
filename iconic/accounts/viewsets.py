@@ -5,7 +5,8 @@ from . import serializers
 
 CustomUser = get_user_model()
 
-#Let's define a viewset for working with models by copying from the view
+
+# Let's define a viewset for working with models by copying from the view
 class CustomUserModelViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CustomUserSerializer
     permission_classes = (permissions.AllowAny,)
