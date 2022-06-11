@@ -12,10 +12,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
         )]
     )
     password = serializers.CharField(write_only=True)
-    last_name = serializers.CharField(required=True)
-    first_name = serializers.CharField(required=True)
-    username = serializers.CharField(required=True)
-    phone = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=False)
+    first_name = serializers.CharField(required=False)
+    username = serializers.CharField(required=False)
+    phone = serializers.CharField(required=False)
 
     class Meta:
         model = CustomUser
