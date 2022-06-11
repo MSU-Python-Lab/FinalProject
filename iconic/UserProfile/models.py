@@ -33,7 +33,6 @@ class Wallet(models.Model):
 
 class Post(models.Model):
     user_id = models.ForeignKey(accounts_user.CustomUser, on_delete=models.CASCADE, related_name='user_id')
-    likes = models.ForeignKey(accounts_user.CustomUser, on_delete=models.CASCADE, related_name='likes')
     post_description = models.TextField()
     published = models.BooleanField()
     source = models.FilePathField(path=accounts_user.user_directory_path, max_length=200)
@@ -61,7 +60,7 @@ class Resume(models.Model):
     achievements = models.TextField()
     skills = models.TextField()
     city = models.ForeignKey(Cities, on_delete=models.CASCADE, related_name='cities_id')
-    profession = models.ForeignKey(Professions, on_delete=models.CASCADE, related_name='professions_id')
+    profession_id = models.ForeignKey(Professions, on_delete=models.CASCADE, related_name='professions_id')
 
     def __str__(self):
         return f"cv of {self.user_id.primary_key}"
