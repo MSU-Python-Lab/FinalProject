@@ -18,6 +18,11 @@ class Followers(models.Model):
     follower = models.ManyToManyField(accounts_user.CustomUser, on_delete=models.CASCADE, related_name='follower')
 
 
+class Likes(models.Model):
+    user_id = models.ManyToManyField(accounts_user.CustomUser, on_delete=models.CASCADE, related_name='user_id')
+    post_id = models.ManyToManyField(Post, on_delete=models.CASCADE, related_name='post_id')
+
+
 class Wallet(models.Model):
     user_id = models.OneToOneField(accounts_user.CustomUser, on_delete=models.CASCADE, related_name='user_id')
     total_amount = models.IntegerField()
@@ -28,7 +33,8 @@ class Wallet(models.Model):
 
 class Post(models.Model):
     user_id = models.ForeignKey(accounts_user.CustomUser, on_delete=models.CASCADE, related_name='user_id')
-    likes = models.ManyToManyField(accounts_user.CustomUser, on_delete=models.CASCADE, related_name='likes')
+    likes = models.ForeignKey(accounts_user.CustomUser, on_delete=models.CASCADE, related_name='likes')
+    post_description = models.TextField()
     published = models.BooleanField()
     source = models.FilePathField(path=accounts_user.user_directory_path, max_length=200)
     time_create = models.DateTimeField(auto_now_add=True)
@@ -59,5 +65,3 @@ class Resume(models.Model):
 
     def __str__(self):
         return f"cv of {self.user_id.primary_key}"
-
-
