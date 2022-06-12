@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from iconic.UserProfile.models import Wallet
+from .models import Wallet
 
 
 # This is custom wallet serializer
