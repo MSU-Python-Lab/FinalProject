@@ -4,7 +4,7 @@ from iconic.UserProfile.models import Wallet
 
 # This is custom wallet serializer
 class CustomWalletSerializer(serializers.ModelSerializer):
-    user_id = serializers.OneToOneField(required=True)
+    user_id = serializers.PrimaryKeyRelatedField(read_only=True)
     total_amount = serializers.IntegerField()
 
     class Meta:
