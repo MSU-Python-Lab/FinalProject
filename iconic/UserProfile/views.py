@@ -4,7 +4,7 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Wallet, Resume, Cities, Professions
-from .serializers import CustomWalletSerializer, CustomResumeSerializer
+from .serializers import CustomWalletSerializer, CustomResumeSerializer, ProfessionsSerializer, CitiesSerializer
 from . import serializers
 
 
