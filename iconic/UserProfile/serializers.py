@@ -26,7 +26,7 @@ class CustomResumeSerializer(serializers.ModelSerializer):
 
 
 class ProfessionsSerializer(serializers.ModelSerializer):
-    profession_name = serializers.CharField()
+    name = serializers.CharField()
 
     class Meta:
         model = Professions
@@ -34,7 +34,7 @@ class ProfessionsSerializer(serializers.ModelSerializer):
 
 
 class CitiesSerializer(serializers.ModelSerializer):
-    city_name = serializers.CharField()
+    name = serializers.CharField()
 
     class Meta:
         model = Cities
