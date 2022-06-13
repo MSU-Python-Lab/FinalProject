@@ -1,5 +1,8 @@
 from rest_framework import serializers
-from .models import Wallet
+from .models import Wallet, Resume, Cities, Professions
+from django.contrib.auth import get_user_model
+
+CustomUser = get_user_model()
 
 
 # This is custom wallet serializer
@@ -10,3 +13,20 @@ class CustomWalletSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wallet
         fields = ('user_id', 'total_amount')
+
+
+# This is custom resume serializer
+class CustomResumeSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects)
+    about_me = serializers.CharField()
+    hobby = serializers.CharField()
+    work_experience = serializers.CharField()
+    achievements = serializers.CharField()
+    skills = serializers.CharField()
+    city = serializers.PrimaryKeyRelatedField(queryset=Cities.objects)
+    profession_id = serializers.PrimaryKeyRelatedField(queryset=Professions.objects)
+
+    class Meta:
+        model = Resume
+        fields = ('user_id', 'about_me', 'hobby', 'work_experience',
+                  'achievements', 'skills', 'city', 'profession_id')
