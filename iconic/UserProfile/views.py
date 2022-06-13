@@ -56,3 +56,77 @@ class UserResumeGetView(APIView):
         resume = Resume.objects.get(user_id=request.user.id)
         data = CustomResumeSerializer(resume).data
         return Response(data)
+
+
+class ProfessionsEdit(APIView):
+
+    def post(self, request):
+        serializer = ProfessionsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+
+    def put(self, request):
+        profession = Professions.objects.get(id=request.data.id)
+        serializer = ProfessionsSerializer(profession, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+
+    def delete(self, request):
+        Professions.objects.get(id=request.data.id).delete()
+        return Response()
+
+
+class ProfessionsGet(APIView):
+
+    def get(self, request):
+        profession = Professions.objects.get(id=request.data.id)
+        serializer = ProfessionsSerializer(profession)
+        return Response(serializer.data)
+
+    def get(self):
+        professions = Professions.objects.all()
+        serializer = ProfessionsSerializer(professions, many=True)
+        return Response(serializer.data)
+
+
+class CitiesEdit(APIView):
+
+    def post(self, request):
+        serializer = CitiesSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+
+    def put(self, request):
+        city = Cities.objects.get(id=request.data.id)
+        serializer = CitiesSerializer(city, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+
+    def delete(self, request):
+        Cities.objects.get(id=request.data.id).delete()
+        return Response()
+
+
+class CitiesGet(APIView):
+
+    def get(self, request):
+        city = Cities.objects.get(id=request.data.id)
+        serializer = CitiesSerializer(city)
+        return Response(serializer.data)
+
+    def get(self):
+        cities = Cities.objects.all()
+        serializer = CitiesSerializer(cities, many=True)
+        return Response(serializer.data)
