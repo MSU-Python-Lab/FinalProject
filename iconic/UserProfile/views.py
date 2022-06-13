@@ -28,7 +28,7 @@ class UserResumeEditView(APIView):
     def post(self, request):
         data = dict(request.data)
         data["user_id"] = request.user.id
-        serializer = CustomResumeSerializer(data)
+        serializer = CustomResumeSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(data=serializer.data)
