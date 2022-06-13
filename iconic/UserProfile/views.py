@@ -59,7 +59,12 @@ class UserResumeGetView(APIView):
 
 
 class ProfessionsEdit(APIView):
-
+    
+    def get(self, request):
+        profession = Professions.objects.get(id=request.data.id)
+        serializer = ProfessionsSerializer(profession)
+        return Response(serializer.data)
+    
     def post(self, request):
         serializer = ProfessionsSerializer(data=request.data)
         if serializer.is_valid():
@@ -84,11 +89,6 @@ class ProfessionsEdit(APIView):
 
 class ProfessionsGet(APIView):
 
-    def get(self, request):
-        profession = Professions.objects.get(id=request.data.id)
-        serializer = ProfessionsSerializer(profession)
-        return Response(serializer.data)
-
     def get(self):
         professions = Professions.objects.all()
         serializer = ProfessionsSerializer(professions, many=True)
@@ -97,6 +97,11 @@ class ProfessionsGet(APIView):
 
 class CitiesEdit(APIView):
 
+    def get(self, request):
+        city = Cities.objects.get(id=request.data.id)
+        serializer = CitiesSerializer(city)
+        return Response(serializer.data)
+    
     def post(self, request):
         serializer = CitiesSerializer(data=request.data)
         if serializer.is_valid():
@@ -120,11 +125,6 @@ class CitiesEdit(APIView):
 
 
 class CitiesGet(APIView):
-
-    def get(self, request):
-        city = Cities.objects.get(id=request.data.id)
-        serializer = CitiesSerializer(city)
-        return Response(serializer.data)
 
     def get(self):
         cities = Cities.objects.all()
