@@ -9,8 +9,8 @@ urlpatterns = [
     path('resume/edit/', views.UserResumeEditView.as_view()),
 
     path('professions/', views.ProfessionsGet.as_view()),
-    path('professions/edit', views.ProfessionsEdit.as_view()),
+    path('professions/edit/', views.ProfessionsEdit.as_view()),
 
     path('cities/', views.CitiesGet.as_view()),
-    path('cities/edit', views.CitiesEdit.as_view()),
+    path('cities/edit/', views.CitiesEdit.as_view()),
 ]
