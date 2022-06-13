@@ -26,12 +26,14 @@ class UserResumeEditView(APIView):
 
     #  for adding
     def post(self, request):
-        serializer = CustomResumeSerializer(data=request.data)
+        data = dict(request.data)
+        data["user_id"] = request.user.id
+        serializer = CustomResumeSerializer(data)
         if serializer.is_valid():
             serializer.save()
             return Response(data=serializer.data)
         else:
-            Response(data=serializer.errors)
+            return Response(data=serializer.errors)
 
     # for changing
     def put(self, request):
@@ -41,7 +43,7 @@ class UserResumeEditView(APIView):
             serializer.save()
             return Response(data=serializer.data)
         else:
-            Response(data=serializer.errors)
+            return Response(data=serializer.errors)
 
 
 # view for reading a resume

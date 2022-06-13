@@ -17,14 +17,8 @@ class CustomWalletSerializer(serializers.ModelSerializer):
 
 # This is custom resume serializer
 class CustomResumeSerializer(serializers.ModelSerializer):
-    user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects)
-    about_me = serializers.CharField()
-    hobby = serializers.CharField()
-    work_experience = serializers.CharField()
-    achievements = serializers.CharField()
-    skills = serializers.CharField()
-    city = serializers.PrimaryKeyRelatedField(queryset=Cities.objects)
-    profession_id = serializers.PrimaryKeyRelatedField(queryset=Professions.objects)
+    user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects, required=False)
+
 
     class Meta:
         model = Resume
