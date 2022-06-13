@@ -61,7 +61,7 @@ class UserResumeGetView(APIView):
 class ProfessionsEdit(APIView):
     
     def get(self, request):
-        profession = Professions.objects.get(id=request.data.id)
+        profession = Professions.objects.get(id=request.data['id'])
         serializer = ProfessionsSerializer(profession)
         return Response(serializer.data)
     
@@ -74,7 +74,7 @@ class ProfessionsEdit(APIView):
             return Response(serializer.errors)
 
     def put(self, request):
-        profession = Professions.objects.get(id=request.data.id)
+        profession = Professions.objects.get(id=request.data['id'])
         serializer = ProfessionsSerializer(profession, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -83,13 +83,13 @@ class ProfessionsEdit(APIView):
             return Response(serializer.errors)
 
     def delete(self, request):
-        Professions.objects.get(id=request.data.id).delete()
+        Professions.objects.get(id=request.data['id']).delete()
         return Response()
 
 
 class ProfessionsGet(APIView):
 
-    def get(self):
+    def get(self, request):
         professions = Professions.objects.all()
         serializer = ProfessionsSerializer(professions, many=True)
         return Response(serializer.data)
@@ -98,7 +98,7 @@ class ProfessionsGet(APIView):
 class CitiesEdit(APIView):
 
     def get(self, request):
-        city = Cities.objects.get(id=request.data.id)
+        city = Cities.objects.get(id=request.data['id'])
         serializer = CitiesSerializer(city)
         return Response(serializer.data)
     
@@ -111,7 +111,7 @@ class CitiesEdit(APIView):
             return Response(serializer.errors)
 
     def put(self, request):
-        city = Cities.objects.get(id=request.data.id)
+        city = Cities.objects.get(id=request.data['id'])
         serializer = CitiesSerializer(city, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -120,13 +120,13 @@ class CitiesEdit(APIView):
             return Response(serializer.errors)
 
     def delete(self, request):
-        Cities.objects.get(id=request.data.id).delete()
+        Cities.objects.get(id=request.data['id']).delete()
         return Response()
 
 
 class CitiesGet(APIView):
 
-    def get(self):
+    def get(self, request):
         cities = Cities.objects.all()
         serializer = CitiesSerializer(cities, many=True)
         return Response(serializer.data)
