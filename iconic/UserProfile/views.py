@@ -3,8 +3,8 @@ from django.shortcuts import render
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Wallet, Resume
-from .serializers import CustomWalletSerializer, CustomResumeSerializer
+from .models import Wallet, Resume, Followers
+from .serializers import CustomWalletSerializer, CustomResumeSerializer, CustomFollowersSerializer
 from . import serializers
 
 
@@ -17,6 +17,44 @@ class UserWalletView(APIView):
         current_wallet = Wallet.objects.get(user_id=request.user.id)
         data = CustomWalletSerializer(current_wallet).data
         return Response(data, status=status.HTTP_200_OK)
+
+
+class NumberOfFollowersView(APIView):
+    def get(self, request):
+        number_of_followers = Followers.objects.filter(user_id=request.user.id).count()
+        return Response({"user_id": request.user.id, "number_of_followers": number_of_followers},
+                        status=status.HTTP_200_OK)
+
+
+class FollowersGetEditDeleteView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        user_id = request.data['user_id']
+        follower_id = request.user.id
+        current_follower = Followers.objects.get(user_id=user_id, follower=follower_id)
+        if current_follower is not None:
+            data = CustomFollowersSerializer(current_follower).data
+            return Response(data, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "Пользователь не подписан на данного пользователя"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request):
+        user_id = request.data['user_id']
+        follower_id = request.user.id
+        current_follower = Followers(user_id=user_id, follower=follower_id)
+        data = CustomFollowersSerializer(current_follower).data
+        serializer = CustomFollowersSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request):
+        Followers.object.get(user_id=request.data['user_id'], follower=request.user.id).delete()
+        return Response(status=status.HTTP_200_OK)
 
 
 # a view for changing and adding data to a resume

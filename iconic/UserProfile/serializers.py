@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Wallet, Resume
+from .models import Wallet, Resume, Followers
 from django.contrib.auth import get_user_model
 
 CustomUser = get_user_model()
@@ -15,10 +15,19 @@ class CustomWalletSerializer(serializers.ModelSerializer):
         fields = ('user_id', 'total_amount')
 
 
+# This is custom followers serializer
+class CustomFollowersSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects)
+    follower = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects)
+
+    class Meta:
+        model = Followers
+        fields = ('user_id', 'follower')
+
+
 # This is custom resume serializer
 class CustomResumeSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects, required=False)
-
 
     class Meta:
         model = Resume
