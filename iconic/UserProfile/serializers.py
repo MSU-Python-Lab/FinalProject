@@ -30,7 +30,7 @@ class ProfessionsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Professions
-        fields = ('profession_name',)
+        fields = ('name',)
 
 
 class CitiesSerializer(serializers.ModelSerializer):
@@ -38,4 +38,4 @@ class CitiesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cities
-        fields = ('city_name',)
+        fields = ('name',)
