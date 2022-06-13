@@ -57,14 +57,16 @@ class UserResumeGetView(APIView):
         data = CustomResumeSerializer(resume).data
         return Response(data)
 
-
+#View for changing and adding a profession
 class ProfessionsEdit(APIView):
     
+    # Method for getting profession by id
     def get(self, request):
         profession = Professions.objects.get(id=request.data['id'])
         serializer = ProfessionsSerializer(profession)
         return Response(serializer.data)
     
+    # Method for adding profession
     def post(self, request):
         serializer = ProfessionsSerializer(data=request.data)
         if serializer.is_valid():
@@ -73,6 +75,7 @@ class ProfessionsEdit(APIView):
         else:
             return Response(serializer.errors)
 
+ # Method for changing profession by id
     def put(self, request):
         profession = Professions.objects.get(id=request.data['id'])
         serializer = ProfessionsSerializer(profession, data=request.data)
@@ -82,26 +85,32 @@ class ProfessionsEdit(APIView):
         else:
             return Response(serializer.errors)
 
+ # Method for deliting profession by id 
     def delete(self, request):
         Professions.objects.get(id=request.data['id']).delete()
         return Response()
 
 
+#View for getting all professions
 class ProfessionsGet(APIView):
-
+# Method for getting all professions
     def get(self, request):
         professions = Professions.objects.all()
         serializer = ProfessionsSerializer(professions, many=True)
         return Response(serializer.data)
 
-
+    
+#View for changing and adding a city
 class CitiesEdit(APIView):
 
+    
+# Method for getting city by id
     def get(self, request):
         city = Cities.objects.get(id=request.data['id'])
         serializer = CitiesSerializer(city)
         return Response(serializer.data)
     
+# Method for adding city by id
     def post(self, request):
         serializer = CitiesSerializer(data=request.data)
         if serializer.is_valid():
@@ -110,6 +119,7 @@ class CitiesEdit(APIView):
         else:
             return Response(serializer.errors)
 
+ # Method for changing city by id 
     def put(self, request):
         city = Cities.objects.get(id=request.data['id'])
         serializer = CitiesSerializer(city, data=request.data)
@@ -119,13 +129,16 @@ class CitiesEdit(APIView):
         else:
             return Response(serializer.errors)
 
+ # Method for deliting city by id  
     def delete(self, request):
         Cities.objects.get(id=request.data['id']).delete()
         return Response()
 
 
+#View for getting all cities
 class CitiesGet(APIView):
-
+    
+#Method for getting all cities
     def get(self, request):
         cities = Cities.objects.all()
         serializer = CitiesSerializer(cities, many=True)
