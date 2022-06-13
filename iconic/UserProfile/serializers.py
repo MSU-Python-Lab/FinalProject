@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Wallet, Resume, Cities, Professions
+from .models import Wallet, Resume
 from django.contrib.auth import get_user_model
 
 CustomUser = get_user_model()
