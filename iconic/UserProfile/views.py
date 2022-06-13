@@ -19,6 +19,7 @@ class UserWalletView(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
 
+# A view for reading the number of followers
 class NumberOfFollowersView(APIView):
     def get(self, request):
         number_of_followers = Followers.objects.filter(user_id=request.user.id).count()
@@ -26,7 +27,8 @@ class NumberOfFollowersView(APIView):
                         status=status.HTTP_200_OK)
 
 
-class FollowersGetEditDeleteView(APIView):
+# A view for getting, adding and deleting followers
+class FollowersGetAddDeleteView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
@@ -40,6 +42,7 @@ class FollowersGetEditDeleteView(APIView):
             return Response({"message": "Пользователь не подписан на данного пользователя"},
                             status=status.HTTP_400_BAD_REQUEST)
 
+    #  for adding
     def post(self, request):
         user_id = request.data['user_id']
         follower_id = request.user.id

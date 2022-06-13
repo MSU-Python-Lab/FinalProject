@@ -8,5 +8,5 @@ urlpatterns = [
     path('resume/', views.UserResumeGetView.as_view()),
     path('resume/edit/', views.UserResumeEditView.as_view()),
     path('followerscount/', views.NumberOfFollowersView.as_view()),
-    path('follower/', views.FollowersGetEditDeleteView.as_view()),
+    path('follower/', views.FollowersGetAddDeleteView.as_view()),
 ]
