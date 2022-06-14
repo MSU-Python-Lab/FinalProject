@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from rest_framework import permissions
+from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Wallet, Resume, Cities, Professions
@@ -16,7 +16,7 @@ class UserWalletView(APIView):
     def get(self, request):
         current_wallet = Wallet.objects.get(user_id=request.user.id)
         data = CustomWalletSerializer(current_wallet).data
-        return Response(data)
+        return Response(data, status=status.HTTP_200_OK)
 
 
 # a view for changing and adding data to a resume
@@ -31,9 +31,9 @@ class UserResumeEditView(APIView):
         serializer = CustomResumeSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response(data=serializer.data)
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(data=serializer.errors)
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # for changing
     def put(self, request):
@@ -41,9 +41,9 @@ class UserResumeEditView(APIView):
         serializer = CustomResumeSerializer(instance, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(data=serializer.data)
+            return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
         else:
-            return Response(data=serializer.errors)
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # view for reading a resume
@@ -55,8 +55,9 @@ class UserResumeGetView(APIView):
     def get(self, request):
         resume = Resume.objects.get(user_id=request.user.id)
         data = CustomResumeSerializer(resume).data
-        return Response(data)
-
+        
+        return Response(data, status=status.HTTP_200_OK)
+      
 #View for changing and adding a profession
 class ProfessionsEdit(APIView):
     

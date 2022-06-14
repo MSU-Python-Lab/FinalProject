@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-7s6q2*zw=az-tjo5j+c=%3g_u8n2^s1=7_lfnbb$(h#ij64%#g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -85,7 +87,7 @@ WSGI_APPLICATION = 'iconic.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
 
@@ -144,3 +146,10 @@ REST_FRAMEWORK = {
        'rest_framework.permissions.IsAuthenticated',
    ]
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1",
+]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = ['DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT']
