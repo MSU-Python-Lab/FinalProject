@@ -16,4 +16,7 @@ urlpatterns = [
 
     path('cities/', views.CitiesGet.as_view()),
     path('cities/edit/', views.CitiesEdit.as_view()),
+
+    path('comments/', views.CommentsGet.as_view()),
+    path('comments/edit/', views.CommentEdit.as_view()),
 ]
