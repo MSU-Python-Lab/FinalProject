@@ -3,8 +3,8 @@ from django.shortcuts import render
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Wallet, Resume, Followers
-from .serializers import CustomWalletSerializer, CustomResumeSerializer, CustomFollowersSerializer
+from .models import Wallet, Resume, Cities, Professions, Followers
+from .serializers import CustomWalletSerializer, CustomResumeSerializer, ProfessionsSerializer, CitiesSerializer, CustomFollowersSerializer
 from . import serializers
 
 
@@ -98,4 +98,92 @@ class UserResumeGetView(APIView):
     def get(self, request):
         resume = Resume.objects.get(user_id=request.user.id)
         data = CustomResumeSerializer(resume).data
+        
         return Response(data, status=status.HTTP_200_OK)
+      
+#View for changing and adding a profession
+class ProfessionsEdit(APIView):
+    
+    # Method for getting profession by id
+    def get(self, request):
+        profession = Professions.objects.get(id=request.data['id'])
+        serializer = ProfessionsSerializer(profession)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    # Method for adding profession
+    def post(self, request):
+        serializer = ProfessionsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+ # Method for changing profession by id
+    def put(self, request):
+        profession = Professions.objects.get(id=request.data['id'])
+        serializer = ProfessionsSerializer(profession, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+ # Method for deliting profession by id 
+    def delete(self, request):
+        Professions.objects.get(id=request.data['id']).delete()
+        return Response(status=status.HTTP_200_OK)
+
+
+#View for getting all professions
+class ProfessionsGet(APIView):
+# Method for getting all professions
+    def get(self, request):
+        professions = Professions.objects.all()
+        serializer = ProfessionsSerializer(professions, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    
+#View for changing and adding a city
+class CitiesEdit(APIView):
+
+    
+# Method for getting city by id
+    def get(self, request):
+        city = Cities.objects.get(id=request.data['id'])
+        serializer = CitiesSerializer(city)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+# Method for adding city by id
+    def post(self, request):
+        serializer = CitiesSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+ # Method for changing city by id 
+    def put(self, request):
+        city = Cities.objects.get(id=request.data['id'])
+        serializer = CitiesSerializer(city, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+ # Method for deliting city by id  
+    def delete(self, request):
+        Cities.objects.get(id=request.data['id']).delete()
+        return Response(status=status.HTTP_200_OK)
+
+
+#View for getting all cities
+class CitiesGet(APIView):
+    
+#Method for getting all cities
+    def get(self, request):
+        cities = Cities.objects.all()
+        serializer = CitiesSerializer(cities, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

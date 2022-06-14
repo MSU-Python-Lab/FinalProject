@@ -34,8 +34,8 @@ class Post(models.Model):
 
 
 class Likes(models.Model):
-    user_id = models.ManyToManyField(accounts_user.CustomUser, related_name='likes_user_id')
-    post_id = models.ManyToManyField(Post, related_name='likes_post_id')
+    user_id = models.ForeignKey(accounts_user.CustomUser, on_delete=models.CASCADE, related_name='likes_user_id')
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes_post_id')
 
 
 class Wallet(models.Model):
