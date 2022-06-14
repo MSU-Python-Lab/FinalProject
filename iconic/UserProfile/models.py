@@ -18,8 +18,8 @@ class Cities(models.Model):
 
 
 class Followers(models.Model):
-    user_id = models.ManyToManyField(accounts_user.CustomUser, related_name='followers_user_id')
-    follower = models.ManyToManyField(accounts_user.CustomUser, related_name='followers_follower')
+    user_id = models.ForeignKey(accounts_user.CustomUser, on_delete=models.CASCADE, related_name='followers_user_id')
+    follower = models.ForeignKey(accounts_user.CustomUser, on_delete=models.CASCADE, related_name='followers_follower')
 
 
 class Post(models.Model):

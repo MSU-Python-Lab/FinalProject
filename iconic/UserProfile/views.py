@@ -22,7 +22,7 @@ class UserWalletView(APIView):
 # A view for reading the number of followers
 class NumberOfFollowersView(APIView):
     def get(self, request):
-        number_of_followers = Followers.objects.filter(user_id=request.user.id).count()
+        number_of_followers = len(Followers.objects.filter(user_id=request.user.id))
         return Response({"user_id": request.user.id, "number_of_followers": number_of_followers},
                         status=status.HTTP_200_OK)
 
@@ -34,9 +34,9 @@ class FollowersGetAddDeleteView(APIView):
     def get(self, request):
         user_id = request.data['user_id']
         follower_id = request.user.id
-        current_follower = Followers.objects.get(user_id=user_id, follower=follower_id)
-        if current_follower is not None:
-            data = CustomFollowersSerializer(current_follower).data
+        current_follower = Followers.objects.filter(user_id=user_id, follower=follower_id)
+        if len(current_follower) != 0:
+            data = CustomFollowersSerializer(current_follower[0]).data
             return Response(data, status=status.HTTP_200_OK)
         else:
             return Response({"message": "Пользователь не подписан на данного пользователя"},
@@ -46,8 +46,7 @@ class FollowersGetAddDeleteView(APIView):
     def post(self, request):
         user_id = request.data['user_id']
         follower_id = request.user.id
-        current_follower = Followers(user_id=user_id, follower=follower_id)
-        data = CustomFollowersSerializer(current_follower).data
+        data = {"user_id": user_id, "follower": follower_id}
         serializer = CustomFollowersSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -56,7 +55,7 @@ class FollowersGetAddDeleteView(APIView):
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
-        Followers.object.get(user_id=request.data['user_id'], follower=request.user.id).delete()
+        Followers.objects.get(user_id=request.data['user_id'], follower=request.user.id).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
