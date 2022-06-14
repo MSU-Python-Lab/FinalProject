@@ -57,7 +57,7 @@ class FollowersGetAddDeleteView(APIView):
 
     def delete(self, request):
         Followers.object.get(user_id=request.data['user_id'], follower=request.user.id).delete()
-        return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # a view for changing and adding data to a resume
