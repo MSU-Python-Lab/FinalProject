@@ -21,9 +21,12 @@ class UserWalletView(APIView):
 
 # A view for reading the number of followers
 class NumberOfFollowersView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
     def get(self, request):
-        number_of_followers = len(Followers.objects.filter(user_id=request.user.id))
-        return Response({"user_id": request.user.id, "number_of_followers": number_of_followers},
+        user_id = request.data['user_id']
+        number_of_followers = len(Followers.objects.filter(user_id=user_id))
+        return Response({"user_id": user_id, "number_of_followers": number_of_followers},
                         status=status.HTTP_200_OK)
 
 
