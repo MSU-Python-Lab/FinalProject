@@ -15,6 +15,16 @@ class CustomWalletSerializer(serializers.ModelSerializer):
         fields = ('user_id', 'total_amount')
 
 
+# This is custom followers serializer
+class CustomFollowersSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects)
+    follower = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects)
+
+    class Meta:
+        model = Followers
+        fields = ('user_id', 'follower')
+
+
 # This is custom resume serializer
 class CustomResumeSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects, required=False)
