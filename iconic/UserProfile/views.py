@@ -96,7 +96,7 @@ class UserResumeGetView(APIView):
 
     # for getting
     def get(self, request):
-        resume = Resume.objects.get(user_id=request.user.id)
+        resume = Resume.objects.get(user_id=request.data["user_id"])
         data = CustomResumeSerializer(resume).data
         
         return Response(data, status=status.HTTP_200_OK)
