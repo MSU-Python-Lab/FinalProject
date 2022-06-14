@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Wallet, Resume, Cities, Professions
+from .models import Wallet, Resume, Cities, Professions, Followers
 from django.contrib.auth import get_user_model
 
 CustomUser = get_user_model()
@@ -34,6 +34,7 @@ class CustomResumeSerializer(serializers.ModelSerializer):
         fields = ('user_id', 'about_me', 'hobby', 'work_experience',
                   'achievements', 'skills', 'city', 'profession_id')
 
+
 # Professions serializer
 class ProfessionsSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
@@ -41,6 +42,7 @@ class ProfessionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Professions
         fields = ('name', 'id')
+
 
 # Cities serializer
 class CitiesSerializer(serializers.ModelSerializer):
