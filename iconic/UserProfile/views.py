@@ -198,12 +198,8 @@ class CommentEdit(APIView):
     def get(self, request):
         comment = Comment.objects.get(id=request.data['id'])
         serializer = CommentSerializer(comment)
-        if serializer.is_valid():
-            return Response(serializer.data,
+        return Response(serializer.data,
                             status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
 
     # Method for adding comment
     def post(self, request):
@@ -221,8 +217,10 @@ class CommentEdit(APIView):
     # Method for changing comment
     def put(self, request):
         comment = Comment.objects.get(id=request.data['id'],
-                                      user_id=request.user.id)
+                                      user_id=request.user.id,
+                                      post_id=request.data['post_id'])
         data = dict(request.data)
+        data["user_id"] = request.user.id
         serializer = CommentSerializer(comment, data=data)
         if serializer.is_valid():
             serializer.save()
@@ -241,6 +239,17 @@ class CommentEdit(APIView):
 # View for getting all comments
 class CommentsGet(APIView):
     permission_classes = (permissions.AllowAny,)
+
+    # Method for getting all comments
+    def get(self, request):
+        comments = Comment.objects.filter(post_id=request.data['post_id'])
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+ 
+
+# View for getting comment
+class CommentGet(APIView):
+permission_classes = (permissions.AllowAny,)
 
     # Method for getting all comments
     def get(self, request):
