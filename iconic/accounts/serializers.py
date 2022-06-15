@@ -6,7 +6,7 @@ CustomUser = get_user_model()
 
 class CustomUserSerializer(serializers.ModelSerializer):
     email = serializers.CharField(
-        write_only=True, required=False, validators=[validators.UniqueValidator(
+            required=False, validators=[validators.UniqueValidator(
             message='This email already exists',
             queryset=CustomUser.objects.all()
         )]
