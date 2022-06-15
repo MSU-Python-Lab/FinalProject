@@ -194,13 +194,6 @@ class CitiesGet(APIView):
 class CommentEdit(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
-    # Method for getting comment by id
-    def get(self, request):
-        comment = Comment.objects.get(id=request.data['id'])
-        serializer = CommentSerializer(comment)
-        return Response(serializer.data,
-                            status=status.HTTP_200_OK)
-
     # Method for adding comment
     def post(self, request):
         data = dict(request.data)
@@ -249,10 +242,11 @@ class CommentsGet(APIView):
 
 # View for getting comment
 class CommentGet(APIView):
-permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.AllowAny,)
 
-    # Method for getting all comments
+    # Method for getting comment by id
     def get(self, request):
-        comments = Comment.objects.filter(post_id=request.data['post_id'])
-        serializer = CommentSerializer(comments, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        comment = Comment.objects.get(id=request.data['id'])
+        serializer = CommentSerializer(comment)
+        return Response(serializer.data,
+                            status=status.HTTP_200_OK)
