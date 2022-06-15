@@ -16,4 +16,5 @@ urlpatterns = [
 
     path('cities/', views.CitiesGet.as_view()),
     path('cities/edit/', views.CitiesEdit.as_view()),
+    path('Likes/', views.LikesGetDeleteView.as_view()),
 ]
