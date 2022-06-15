@@ -65,7 +65,7 @@ function registrationPage() {
                         </div>
 
                         <div className="w-full bg-white mr-20 lg:w-6/12 xl:w-1/2">
-                            <div className="flex flex-col items-start justify-end w-full h-full p-10 lg:p-16 xl:p-24">
+                            <div className="flex flex-col items-start justify-center w-full h-full p-10 lg:p-16 xl:p-24">
                                 <h4  id="reg" className="w-full text-3xl ml-56 font-bold">Регистрация</h4>
                                 <div  className="relative w-full mt-5 space-y-3">
 
