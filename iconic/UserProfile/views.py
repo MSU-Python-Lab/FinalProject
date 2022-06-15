@@ -117,7 +117,7 @@ class UserResumeGetView(APIView):
 
 
 # View for changing, reading and adding a profession
-class ProfessionsEdit(APIView):
+class ProfessionsEditView(APIView):
     serializers_class = ProfessionsSerializer
     permission_classes = (permissions.IsAuthenticated, ) # TODO change this
 
@@ -162,7 +162,7 @@ class ProfessionsEdit(APIView):
 
 
 # View for getting all professions
-class ProfessionsGet(APIView):
+class ProfessionsGetView(APIView):
     serializers_class = ProfessionsSerializer
     permission_classes = (permissions.AllowAny, )
 
@@ -174,7 +174,7 @@ class ProfessionsGet(APIView):
 
 
 # View for changing and adding a city
-class CitiesEdit(APIView):
+class CitiesEditView(APIView):
     serializers_class = CitiesSerializer
     permission_classes = (permissions.IsAuthenticated, ) # TODO change this
     # Method for getting city by id
@@ -218,7 +218,7 @@ class CitiesEdit(APIView):
 
 
 # View for getting all cities
-class CitiesGet(APIView):
+class CitiesGetView(APIView):
     serializers_class = CitiesSerializer
     permission_classes = (permissions.AllowAny, ) # TODO change this
     # Method for getting all cities
@@ -333,7 +333,7 @@ class PostEditView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
       
 # View for getting comment! adding, changing and deleting comment by authorize user
-class CommentEdit(APIView):
+class CommentEditView(APIView):
     serializers_class = CommentSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -381,7 +381,7 @@ class CommentEdit(APIView):
 
 
 # View for getting all comments
-class CommentsGet(APIView):
+class CommentsGetView(APIView):
     serializers_class = CommentSerializer
     permission_classes = (permissions.AllowAny,)
 
@@ -393,7 +393,7 @@ class CommentsGet(APIView):
  
 
 # View for getting comment
-class CommentGet(APIView):
+class CommentGetView(APIView):
     serializers_class = CommentSerializer
     permission_classes = (permissions.AllowAny,)
 
