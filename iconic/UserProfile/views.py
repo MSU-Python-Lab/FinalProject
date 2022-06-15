@@ -234,7 +234,7 @@ class PostEditView(APIView):
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
-        instance = Post.objects.get(user_id=request.user.id)
+        instance = Post.objects.get(id=request.data["id"], user_id=request.user.id)
         serializer = CustomPostSerializer(instance, data=request.data)
         if serializer.is_valid():
             serializer.save()
