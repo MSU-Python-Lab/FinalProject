@@ -250,3 +250,63 @@ class PostEditView(APIView):
     def delete(self, request):
         Post.objects.get(id=request.data['id'], user_id=request.user.id).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+      
+# View for getting comment! adding, getting, changing comment by authorize user
+class CommentEdit(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    # Method for adding comment
+    def post(self, request):
+        data = dict(request.data)
+        data["user_id"] = request.user.id
+        serializer = CommentSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,
+                            status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
+    # Method for changing comment
+    def put(self, request):
+        comment = Comment.objects.get(id=request.data['id'],
+                                      user_id=request.user.id,
+                                      post_id=request.data['post_id'])
+        data = dict(request.data)
+        data["user_id"] = request.user.id
+        serializer = CommentSerializer(comment, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
+    # Method for deleting comment by id
+    def delete(self, request):
+        Comment.objects.get(id=request.data['id'], 
+                            user_id=request.user.id).delete()
+        return Response(status=status.HTTP_200_OK)
+
+
+# View for getting all comments
+class CommentsGet(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    # Method for getting all comments
+    def get(self, request):
+        comments = Comment.objects.filter(post_id=request.data['post_id'])
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+ 
+
+# View for getting comment
+class CommentGet(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    # Method for getting comment by id
+    def get(self, request):
+        comment = Comment.objects.get(id=request.data['id'])
+        serializer = CommentSerializer(comment)
+        return Response(serializer.data, status=status.HTTP_200_OK)

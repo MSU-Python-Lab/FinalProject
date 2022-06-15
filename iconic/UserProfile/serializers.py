@@ -60,3 +60,11 @@ class CustomPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'user_id', 'post_description', 'source', 'published', 'time_create')
+        
+class CommentSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects)
+    post_id = serializers.PrimaryKeyRelatedField(queryset=Post.objects)
+
+    class Meta:
+        model = Comment
+        fields = ('id', 'user_id', 'message', 'time_create', 'post_id')
