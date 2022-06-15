@@ -3,9 +3,8 @@ from django.shortcuts import render
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Wallet, Resume, Cities, Professions, Followers, Comment
-from .serializers import CustomWalletSerializer, CustomResumeSerializer, ProfessionsSerializer, CitiesSerializer, \
-    CustomFollowersSerializer, CommentSerializer
+from .models import *
+from .serializers import *
 from . import serializers
 
 
@@ -190,6 +189,68 @@ class CitiesGet(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+# A view for getting all users posts
+class AllUserPostsGetView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        user_id = request.data['user_id']
+        current_posts = Post.objects.filter(user_id=user_id)
+        data = CustomPostSerializer(current_posts, many=True).data
+        new_data = []
+        for dic in data:
+            dic["likes"] = len(Likes.objects.filter(post_id=dic["id"]))
+            new_data.append(dic)
+        return Response(new_data, status=status.HTTP_200_OK)
+
+
+# A view for getting all information about post
+class PostGetView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        post_id = request.data['id']
+        current_post = Post.objects.get(id=post_id)
+        data = CustomPostSerializer(current_post).data
+        data["id"] = post_id
+        data["likes"] = len(Likes.objects.filter(post_id=post_id))
+        return Response(data, status=status.HTTP_200_OK)
+
+
+# a view for changing, adding and deleting data to a post
+class PostEditView(APIView):
+    permissions_classes = (permissions.IsAuthenticated)
+
+    def post(self, request):
+        data = dict(request.data)
+        user_id = request.user.id
+        data["user_id"] = user_id
+        serializer = CustomPostSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            response_data = dict(serializer.data)
+            response_data["likes"] = 0
+            return Response(data=response_data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request):
+        instance = Post.objects.get(id=request.data["id"], user_id=request.user.id)
+        data = dict(request.data)
+        data["user_id"] = request.user.id
+        serializer = CustomPostSerializer(instance, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            response_data = dict(serializer.data)
+            response_data["likes"] = len(Likes.objects.filter(post_id=request.data["id"]))
+            return Response(data=response_data, status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request):
+        Post.objects.get(id=request.data['id'], user_id=request.user.id).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+      
 # View for getting comment! adding, getting, changing comment by authorize user
 class CommentEdit(APIView):
     permission_classes = (permissions.IsAuthenticated,)

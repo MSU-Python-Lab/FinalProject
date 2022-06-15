@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Wallet, Resume, Cities, Professions, Followers, Post, Comment
+from .models import *
 from django.contrib.auth import get_user_model
 
 CustomUser = get_user_model()
@@ -53,6 +53,14 @@ class CitiesSerializer(serializers.ModelSerializer):
         fields = ('name', 'id')
 
 
+# This is custom post serializer
+class CustomPostSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects)
+
+    class Meta:
+        model = Post
+        fields = ('id', 'user_id', 'post_description', 'source', 'published', 'time_create')
+        
 class CommentSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects)
     post_id = serializers.PrimaryKeyRelatedField(queryset=Post.objects)
