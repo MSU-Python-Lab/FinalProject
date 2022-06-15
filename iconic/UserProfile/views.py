@@ -192,7 +192,7 @@ class CitiesGet(APIView):
 
 
 class LikesGetDeleteView(APIView):
-    permission_classes = (permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
         user_id = request.user.id
@@ -204,6 +204,7 @@ class LikesGetDeleteView(APIView):
         else:
             return Response({"message": "Лайков нема"},
                             status=status.HTTP_400_BAD_REQUEST)
+
     def post(self, request):
         user_id = request.user.id
         post_id = request.data['post_id']
