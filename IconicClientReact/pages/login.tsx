@@ -51,9 +51,9 @@ function LoginPage() {
                     <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="inputLogin hover:ring-4 hover:ring-[#82f0eb]" placeholder="Email или телефон"/><br/>
                     <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className="inputLogin hover:ring-4 hover:ring-[#82f0eb]" placeholder="Пароль"/>
                     <p id="password1" className="w-40 text-left text-[#27E0D5] hover:underline" ><a href="/restart">Забыли пароль?</a></p>
-                    <form>
+
                         <button onClick={successLogin} className="butNext hover:opacity-80">Продолжить</button>
-                    </form>
+
                     <p className="w-full mt-4 text-sm text-center text-gray-500">Нет аккаунта?
                         <Link href="/registration" className="text-blue-500 underline">Зарегистрируйтесь здесь</Link></p>
                 </div>
