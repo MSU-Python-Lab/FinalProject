@@ -235,7 +235,9 @@ class PostEditView(APIView):
 
     def put(self, request):
         instance = Post.objects.get(id=request.data["id"], user_id=request.user.id)
-        serializer = CustomPostSerializer(instance, data=request.data)
+        data = dict(request.data)
+        data["user_id"] = request.user.id
+        serializer = CustomPostSerializer(instance, data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
