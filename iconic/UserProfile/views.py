@@ -248,5 +248,4 @@ class CommentGet(APIView):
     def get(self, request):
         comment = Comment.objects.get(id=request.data['id'])
         serializer = CommentSerializer(comment)
-        return Response(serializer.data,
-                            status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
