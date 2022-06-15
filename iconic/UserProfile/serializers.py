@@ -51,8 +51,7 @@ class CitiesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cities
         fields = ('name', 'id')
-
-
+        
 # This is custom post serializer
 class CustomPostSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects)
@@ -64,7 +63,15 @@ class CustomPostSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects)
     post_id = serializers.PrimaryKeyRelatedField(queryset=Post.objects)
-
-    class Meta:
+    class Meta: 
         model = Comment
         fields = ('id', 'user_id', 'message', 'time_create', 'post_id')
+        
+        
+class LikesSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects)
+    post_id = serializers.PrimaryKeyRelatedField(queryset=Post.objects)
+
+    class Meta:
+        model = Likes
+        fields = ('user_id', 'post_id')

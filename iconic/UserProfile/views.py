@@ -188,6 +188,35 @@ class CitiesGet(APIView):
         serializer = CitiesSerializer(cities, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class LikesGetDeleteView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        user_id = request.user.id
+        post_id = request.data['post_id']
+        current_Likes = Likes.objects.filter(user_id=user_id, post_id=post_id)
+        if len(current_Likes) != 0:
+            data = LikesSerializer(current_Likes[0]).data
+            return Response(data, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "Лайков нема"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request):
+        user_id = request.user.id
+        post_id = request.data['post_id']
+        data = {"user_id": user_id, "post_id": post_id}
+        serializer = LikesSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request):
+        Likes.objects.get(user_id=request.user.id, post_id=request.data['post_id']).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+      
 
 # A view for getting all users posts
 class AllUserPostsGetView(APIView):
