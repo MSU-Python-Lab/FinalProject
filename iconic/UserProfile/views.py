@@ -204,6 +204,16 @@ class LikesGetDeleteView(APIView):
         else:
             return Response({"message": "Лайков нема"},
                             status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request):
+        user_id = request.user.id
+        post_id = request.data['post_id']
+        data = {"user_id": user_id, "post_id": post_id}
+        serializer = LikesSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
         Likes.objects.get(user_id=request.user.id, post_id=request.data['post_id']).delete()
