@@ -198,7 +198,7 @@ class CommentEdit(APIView):
     def get(self, request):
         comment = Comment.objects.get(id=request.data['id'])
         serializer = CommentSerializer(comment)
-        if serializer.is_valid:
+        if serializer.is_valid():
             return Response(serializer.data,
                             status=status.HTTP_200_OK)
         else:
@@ -208,6 +208,7 @@ class CommentEdit(APIView):
     # Method for adding comment
     def post(self, request):
         data = dict(request.data)
+        data["user_id"] = request.user.id
         serializer = CommentSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -219,7 +220,8 @@ class CommentEdit(APIView):
 
     # Method for changing comment
     def put(self, request):
-        comment = Comment.objects.get(id=request.data['id'])
+        comment = Comment.objects.get(id=request.data['id'],
+                                      user_id=request.user.id)
         data = dict(request.data)
         serializer = CommentSerializer(comment, data=data)
         if serializer.is_valid():
@@ -231,12 +233,14 @@ class CommentEdit(APIView):
 
     # Method for deleting comment by id
     def delete(self, request):
-        Comment.objects.get(id=request.data['id']).delete()
+        Comment.objects.get(id=request.data['id'], 
+                            user_id=request.user.id).delete()
         return Response(status=status.HTTP_200_OK)
 
 
 # View for getting all comments
 class CommentsGet(APIView):
+    permission_classes = (permissions.AllowAny,)
 
     # Method for getting all comments
     def get(self, request):
