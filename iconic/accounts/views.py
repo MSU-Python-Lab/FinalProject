@@ -14,5 +14,10 @@ class UserRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.CustomUserSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        instance.set_password(instance.password)
+        instance.save()
+
     def get_object(self):
         return self.request.user
