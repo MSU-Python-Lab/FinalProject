@@ -1,28 +1,22 @@
-
 import {Dispatch} from "redux";
 import axios, {AxiosError, AxiosResponse} from "axios";
 import {wrapUrl} from "../../helpers/urlWrapper";
 import {apiUrl} from "../../config";
-import {authHeader, setAuthToken} from "../../helpers/AuthHelper";
-import {ErrorBackend} from "../../components/interfaces/basicObjects";
-import {Auth, TokenAction, TokenActionTypes} from "../../types/auth";
-import {number} from "prop-types";
+import {setAuthToken} from "../../helpers/AuthHelper";
+import {TokenAction, TokenActionTypes} from "../../types/auth";
+import {CommonResponseError} from "../../types/basicTypes";
+
 
 interface AuthResponse {
     token: string
 }
 
-interface AuthResponseError {
-    success: boolean,
-    data: ErrorBackend[]
-}
-
 export const getAuthUser = ( password: string,email: string) => {
     return async (dispatch: Dispatch<TokenAction>) => {
         dispatch({type: TokenActionTypes.FETCH_TOKEN, ts: Date.now()});
-        const data = await axios.post(
+        return await axios.post(
             wrapUrl(`${apiUrl}/token/login/`),
-            JSON.stringify({password,email }),
+            JSON.stringify({password, email}),
             {
                 headers: {
                     'Accept': 'application/json',
@@ -30,7 +24,7 @@ export const getAuthUser = ( password: string,email: string) => {
                 },
             }
         ).then(function (response: AxiosResponse<AuthResponse>) {
-            console.log(response.data.token)
+            console.log(response.data)
             setAuthToken(response.data.token)
             return dispatch({
                 type: TokenActionTypes.FETCH_TOKEN_SUCCESS,
@@ -38,13 +32,12 @@ export const getAuthUser = ( password: string,email: string) => {
                 ts: Date.now()
             })
 
-        }).catch((e: AxiosError<AuthResponseError>) => {
+        }).catch((e: AxiosError<CommonResponseError>) => {
             return dispatch({
                 type: TokenActionTypes.FETCH_TOKEN_ERROR,
                 payload: e.toString(),
                 ts: Date.now()
             })
         })
-        return data
     }
 }

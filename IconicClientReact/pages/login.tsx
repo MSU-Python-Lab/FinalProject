@@ -26,30 +26,37 @@ function LoginPage() {
     const AuthSelect = useTypedSelector(state => state.auth)
     const {getAuthUser} = useActions()
 
-    async function successLogin() {
-         getAuthUser(password, email)
-        if (authExists()) {
-            router.push('/')
-        }
+    // async function successLogin() {
+    //     await getAuthUser(password, email)
+    //     if (authExists()) {
+    //         await router.push('/')
+    //     }
+    // }
+     function successLogin() {
+        getAuthUser(email, password)
     }
+
+
+
 
     return (
         displayAuthForm &&
-            <section>
-        <div id="dev0">
+        <section>
+            <div id="dev0">
+                <p className="iconic">Iconic</p>
+                <p className="text_number">Введите номер</p>
+                <p className="text_number text_dop">Ваш номер телефона будет<br/> использоваться для входа в аккаунт</p>
+                <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)}
+                       className="inputLogin" placeholder="Email или телефон"/><br/>
+                <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}
+                       className="inputLogin " placeholder="Пароль"/>
 
-            <p className = "iconic">Iconic</p>
-            <p className = "text_number">Введите номер</p>
-            <p className = "text_number text_dop">Ваш номер телефона будет<br/> использоваться для входа в аккаунт</p>
-            <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="inputLogin" placeholder="Email или телефон"/><br/>
-            <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className="inputLogin " placeholder="Пароль"/>
-            <form >
-                <button onClick={successLogin} className="butNext ">Продолжить</button>
-            </form>
-            <p className="w-full mt-4 text-sm text-center text-gray-500">Нет аккаунта?
-             <Link href="/registration" className="text-blue-500 underline">Зарегистрируйтесь здесь</Link></p>
-        </div>
-            </section>
+                    <button onClick={()=> successLogin()} className="butNext ">Продолжить</button>
+
+                <p className="w-full mt-4 text-sm text-center text-gray-500">Нет аккаунта?
+                    <Link href="/registration" className="text-blue-500 underline">Зарегистрируйтесь здесь</Link></p>
+            </div>
+        </section>
         // <section className=" w-full px-8 bg-gray-100  xl:px-8">
         //     <div className="max-w-5xl mx-auto">
         //         <div className="flex h-screen flex-col items-center md:flex-row">

@@ -1,19 +1,17 @@
-import { useRouter } from 'next/router'
-import {useUser} from "../../hooks/useUser";
+import {useRouter} from 'next/router'
 
-import { ElementType, useEffect } from 'react'
+import {useEffect} from 'react'
+import {authExists} from "../../helpers/AuthHelper";
 
 export default function withAuth(WrappedComponent: any) {
-    const Wrapper = (props: unknown) => {
+    return (props: unknown) => {
         const router = useRouter()
         useEffect(() => {
-            const user = useUser()
+            const user = authExists()
             if (!user) {
                 router.replace('/firstpage')
             }
         }, [])
         return <WrappedComponent {...props} />
     }
-
-    return Wrapper
 }

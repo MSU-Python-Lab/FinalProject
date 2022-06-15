@@ -3,7 +3,7 @@ import {Dispatch} from "redux";
 import axios, {AxiosError, AxiosResponse} from "axios";
 import {wrapUrl} from "../../helpers/urlWrapper";
 import {apiUrl} from "../../config";
-import {ErrorBackend} from "../../components/interfaces/basicObjects";
+import {ErrorBackend} from "../../types/basicTypes";
 import {Reg, RegAction} from "../../types/reg";
 import {RegActionTypes} from "../../types/reg";
 

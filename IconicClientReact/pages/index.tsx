@@ -3,13 +3,13 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import Modal from "../components/ModalWindow/Modal"
 import {router} from "next/client";
-import {logout} from "../helpers/AuthHelper";
+//import {logout} from "../helpers/AuthHelper";
 
 //функция выхода из аккаунта не доработана и вызывает непредвиденные ошибки, поэтому ее пока нет
 //токен можно удалить из браузера для тестов
 
 function Index() {
-    const [modalActive, setModalActive]=useState(false)
+    //const [modalActive, setModalActive]=useState(false)
     //const [out,setOut]=useState(false)
     // useEffect(() => {
     //
@@ -31,12 +31,15 @@ function Index() {
 
 
     return(
+        <>
         <div>
             <div>
                 <div className="w-full space-y-5 md:w-3/5 md:pr-16">
-                    <button className="w-full px-3 py-4 font-medium text-white bg-indigo-600 rounded-full hover:bg-indigo-500 transition 0.4s" onClick={() => setModalActive(true)}>Модальное окно для резюме</button>
+                    <p>edrftvygbhunjiko</p>
+                    {/*<button className="w-full px-3 py-4 font-medium text-white bg-indigo-600 rounded-full hover:bg-indigo-500 transition 0.4s" onClick={() => setModalActive(true)}>Модальное окно для резюме</button>*/}
                 </div>
             </div>
+
 
 
 
@@ -119,13 +122,13 @@ function Index() {
         {/*<img width={240} height={185} src="/img/posts/pic4.jpg" alt="" />*/}
         {/*</div>*/}
         {/*        </div>*/}
-            <Modal active={modalActive} setActive={setModalActive}>
-                <p>Здесь будет резюме</p>
+        {/*    <Modal active={modalActive} setActive={setModalActive}>*/}
+        {/*        <p>Здесь будет резюме</p>*/}
 
-            </Modal>
+        {/*    </Modal>*/}
 
         </div>
-
+        </>
     )
 }
 export default withAuth(Index)
