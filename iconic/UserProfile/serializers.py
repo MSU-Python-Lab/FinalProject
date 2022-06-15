@@ -53,7 +53,7 @@ class CitiesSerializer(serializers.ModelSerializer):
         fields = ('name', 'id')
 
 class LikesSerializer(serializers.ModelSerializer):
-    user_id = serializers.PrimaryKeyRelatedField(queryset=Post.objects)
+    user_id = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects)
     post_id = serializers.PrimaryKeyRelatedField(queryset=Post.objects)
 
     class Meta:
