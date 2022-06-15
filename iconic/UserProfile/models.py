@@ -5,6 +5,7 @@ import sys
 sys.path.append('../')
 # IDE says that there is unresolved references, but ignore it
 from accounts import models as accounts_user
+from iconic import settings
 
 
 # Create your models here.
@@ -26,7 +27,7 @@ class Post(models.Model):
     user_id = models.ForeignKey(accounts_user.CustomUser, on_delete=models.CASCADE, related_name='post_user_id')
     post_description = models.TextField()
     published = models.BooleanField()
-    source = models.FilePathField(path=accounts_user.user_directory_path, max_length=200)
+    source = models.FilePathField(path=settings.MEDIA_ROOT, recursive=True, max_length=200)
     time_create = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

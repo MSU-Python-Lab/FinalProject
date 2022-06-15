@@ -3,9 +3,9 @@
   margin-top:10%;
   margin-left: 10%
 }
-* {
-  background-color: #E5E5E5;
-}
+/** {*/
+/*  background-color: #E5E5E5;*/
+/*}*/
 
 #notebook {
   position: center;
