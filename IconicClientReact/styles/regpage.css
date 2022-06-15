@@ -1,21 +1,24 @@
-#main {
 
-  margin-top:10%;
-  margin-left: 10%
+#main {
+  background-color: #E5E5E5;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
 }
-/** {*/
-/*  background-color: #E5E5E5;*/
-/*}*/
+
 
 #notebook {
   position: center;
   height: 400px;
+  margin-top:24%;
+  margin-left:2%
 }
 #inside_notebook {
   position: center;
-  height: 65%;
+  height: 44.2%;
   margin-top: -54%;
-  margin-left: 11.7%;
+  margin-left: 13.7%;
 }
 
 #iconicLabel {
@@ -24,6 +27,7 @@
   margin: 10%;
   width: 80%;
   height: 40%;
+
 }
 
 #iconicFull {
@@ -31,7 +35,7 @@
   border-radius: 18px;
   width: 400px;
   height: 450px;
-  margin-left: 0;
+  margin-top:13%;
 }
 
 
@@ -45,7 +49,6 @@ button {
   margin-top: 20px;
   width: 70%;
   border-radius: 18px;
-  border: 0px solid;
 }
 
 
@@ -129,10 +132,6 @@ margin-bottom: 15px;
 outline: none;
 padding-left:20px;
 }
-.inputLogin:hover {
-  background-color: #d7cece;
-  transition: 0.4s;
-}
 
 
 .butNext {
@@ -142,3 +141,64 @@ padding-left:20px;
   width: 400px;
   margin-top: 0.8%
  }
+
+#password1{
+  margin-left: 38%;
+
+}
+
+#rest{
+
+  font-family: 'Gotham Pro';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 35px;
+  line-height: 33px;
+  color: #148290;
+}
+
+#mail{
+  font-family: 'Gotham Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 24px;
+  color: #575757;
+
+}
+
+#poyasn{
+
+  font-family: 'Gotham Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 17px;
+
+
+  color: #B5B5B5;
+}
+
+.inputMail{
+  height: 50px;
+  width: 29%;
+  border: 5px solid transparent;
+  border-radius: 18px;
+  font-family: 'Gotham Pro';
+  font-style: normal;
+  font-weight: 1000;
+  background-color: #E5E5E5;
+  color: rgba(146, 146, 146, 1);
+  text-align: left;
+  margin-bottom: 15px;
+  outline: none;
+  padding-left:20px;
+
+}
+.butt{
+  width: 10%;
+}
+
+.box{
+  overflow: hidden;
+}

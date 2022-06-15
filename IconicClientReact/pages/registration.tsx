@@ -55,7 +55,7 @@ function registrationPage() {
                              w-full h-full px-10 my-0 lg:w-1/2 lg:px-16 lg:my-0 sm:border-b-2 xl:border-r-2 xl:border-l-2">
                                 <div className="flex flex-col items-center  tracking-tight lg:max-w-3xl px-10">
                                     <div className="relative mr-4">
-                                        <h2 className="text-8xl font-sans text-gray-900 xl:text-9xl px-333">Iconic </h2>
+                                        <h2 className="text-8xl font-sans text-gray-900 xl:text-9xl px-333 hover:animate-waving-hand">Iconic </h2>
                                     </div>
                                     <p className="text-xs text-gray-700 xl:text-xl">ты уникален</p>
                                 </div>
@@ -63,7 +63,7 @@ function registrationPage() {
                         </div>
 
                         <div className="w-full bg-white mr-20 lg:w-6/12 xl:w-1/2">
-                            <div className="flex flex-col items-start justify-end w-full h-full p-10 lg:p-16 xl:p-24">
+                            <div className="flex flex-col items-start justify-center w-full h-full p-10 lg:p-16 xl:p-24">
                                 <h4  id="reg" className="w-full text-3xl ml-56 font-bold">Регистрация</h4>
                                 <div  className="relative w-full mt-5 space-y-3">
 
