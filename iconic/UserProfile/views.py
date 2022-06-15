@@ -225,11 +225,12 @@ class PostEditView(APIView):
         data = dict(request.data)
         user_id = request.user.id
         data["user_id"] = user_id
-        data["likes"] = 0
         serializer = CustomPostSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+            response_data = dict(serializer.data)
+            response_data["likes"] = 0
+            return Response(data=response_data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -240,7 +241,9 @@ class PostEditView(APIView):
         serializer = CustomPostSerializer(instance, data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
+            response_data = dict(serializer.data)
+            response_data["likes"] = len(Likes.objects.filter(post_id=request.data["id"]))
+            return Response(data=response_data, status=status.HTTP_202_ACCEPTED)
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
