@@ -1,24 +1,31 @@
 #bl1 {
     background-color: rgba(39, 224, 213, 0.4);
 }
+
 #bl2 {
     background-color: rgba(39, 224, 213, 0.5);
 }
+
 #bl3 {
     background-color: rgba(39, 224, 213, 0.6);
 }
+
 #bl4 {
     background-color: rgba(39, 224, 213, 0.7);
 }
+
 #bl5 {
     background-color: rgba(39, 224, 213, 0.8);
 }
+
 #bl6 {
     background-color: rgba(39, 224, 213, 0.9);
 }
+
 #bl7 {
     background-color: rgba(39, 224, 213, 1);
 }
+
 #reg {
     color: #148290;
 }

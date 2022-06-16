@@ -10,8 +10,6 @@ import {background} from "@chakra-ui/react";
 import '../pages/_document'
 
 
-
-
 function LoginPage() {
     const router = useRouter()
     let [displayAuthForm, setDisplayAuthForm] = useState(false)
@@ -28,6 +26,7 @@ function LoginPage() {
     const AuthSelect = useTypedSelector(state => state.auth)
     const {getAuthUser} = useActions()
 
+
     // async function successLogin() {
     //     await getAuthUser(password, email)
     //     if (authExists()) {
@@ -36,16 +35,10 @@ function LoginPage() {
     // }
 
     return (
-        displayAuthForm&&
+        displayAuthForm &&
         <section id="main" className="">
             <div id="main" className="flex  mr-auto ml-auto justify-content-center align-items-center">
-                <Head>
-                    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-                    <link rel="preconnect" href="https://fonts.gstatic.com"/>
-                    <link href="https://fonts.googleapis.com/css2?family=Birthstone+Bounce&display=swap"
-                          rel="stylesheet"/>
-                    <link href="http://fonts.cdnfonts.com/css/gotham-pro?styles=24951" rel="stylesheet"/>
-                </Head>
+
                 <div className="flex"></div>
                 <div className="flex align-items-center justify-content-center">
                     <div>
@@ -70,8 +63,8 @@ function LoginPage() {
                 <div className="flex"></div>
             </div>
         </section>
-     )
+    )
 
-  }
+}
 
-  export default LoginPage
+export default LoginPage

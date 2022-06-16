@@ -11,7 +11,7 @@ interface AuthResponse {
     token: string
 }
 
-export const getAuthUser = ( password: string,email: string) => {
+export const getAuthUser = (password: string, email: string) => {
     return async (dispatch: Dispatch<TokenAction>) => {
         dispatch({type: TokenActionTypes.FETCH_TOKEN, ts: Date.now()});
         return await axios.post(

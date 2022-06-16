@@ -1,4 +1,3 @@
-
 import {Dispatch} from "redux";
 import axios, {AxiosError, AxiosResponse} from "axios";
 import {wrapUrl} from "../../helpers/urlWrapper";
@@ -16,12 +15,12 @@ interface RegResponseError {
     data: ErrorBackend[]
 }
 
-export const getRegUser = ( username:string,password: string,email: string,first_name:string,last_name:string,phone:string) => {
+export const getRegUser = (username: string, password: string, email: string, first_name: string, last_name: string, phone: string) => {
     return async (dispatch: Dispatch<RegAction>) => {
         dispatch({type: RegActionTypes.CREATE_REG, ts: Date.now()});
         const data = await axios.post(
             wrapUrl(`${apiUrl}/accounts/users/`),
-            JSON.stringify({username,password,email,first_name,last_name,phone}),
+            JSON.stringify({username, password, email, first_name, last_name, phone}),
             {
                 headers: {
                     'Accept': 'application/json',

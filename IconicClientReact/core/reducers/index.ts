@@ -5,7 +5,7 @@ import {RegReducer} from "./regReducer";
 
 export const rootReducer = combineReducers({
     auth: AuthReducer,
-    reg:RegReducer
+    reg: RegReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>
