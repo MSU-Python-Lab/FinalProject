@@ -9,7 +9,7 @@ import {logout} from "../helpers/AuthHelper";
 //токен можно удалить из браузера для тестов
 
 function Index() {
-    const [modalActive, setModalActive] = useState(false)
+    //const [modalActive, setModalActive]=useState(false)
     //const [out,setOut]=useState(false)
     // useEffect(() => {
     //
@@ -175,5 +175,4 @@ function Index() {
         </div>
     )
 }
-
-export default Index
+export default withAuth(Index)

@@ -5,7 +5,7 @@ from validate_email import validate_email
 
 class CustomUserManager(BaseUserManager):
     # we are defining a custom user model that will handle user authentication for us
-    def create_user(self, email, password, **extra_fields):
+    def create(self, email, password, **extra_fields):
         if not email:
             raise ValueError(_('The Email must be set'))
         email = self.normalize_email(email)

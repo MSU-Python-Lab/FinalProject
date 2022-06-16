@@ -25,8 +25,6 @@ function registrationPage() {
         }
     }, [])
 
-    const {getAuthUser} = useActions()
-    const reg = useTypedSelector(state => state.reg)
     const {getRegUser} = useActions()
 
 
@@ -46,6 +44,7 @@ function registrationPage() {
     }
 
     return (
+        displayAuthForm &&
         <>
             <section className="w-full bg-white ">
                 <div className="mx-auto max-w-8xl">
@@ -57,7 +56,7 @@ function registrationPage() {
                              w-full h-full px-10 my-0 lg:w-1/2 lg:px-16 lg:my-0 sm:border-b-2 xl:border-r-2 xl:border-l-2">
                                 <div className="flex flex-col items-center  tracking-tight lg:max-w-3xl px-10">
                                     <div className="relative mr-4">
-                                        <h2 className="text-8xl font-sans text-gray-900 xl:text-9xl px-333">Iconic </h2>
+                                        <h2 className="text-8xl font-sans text-gray-900 xl:text-9xl px-333 hover:animate-waving-hand">Iconic </h2>
                                     </div>
                                     <p className="text-xs text-gray-700 xl:text-xl">ты уникален</p>
                                 </div>

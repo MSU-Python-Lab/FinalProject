@@ -1,4 +1,4 @@
-import {ErrorBackend} from "../components/interfaces/basicObjects";
+import {ErrorBackend} from "./basicTypes";
 
 export interface Reg {
     preuser: { success: any, data: any }

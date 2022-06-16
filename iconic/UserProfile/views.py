@@ -1,56 +1,60 @@
 from django.shortcuts import render
+from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import *
 from .serializers import *
-from . import serializers
 
 
 # A view for reading the amount of money in the users wallet
-class UserWalletView(APIView):
-    serializer_class = serializers.CustomWalletSerializer
+class WalletView(APIView):
+    serializer_class = WalletSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        current_wallet = Wallet.objects.get(user_id=request.user.id)
-        data = CustomWalletSerializer(current_wallet).data
+        try:
+            current_wallet = Wallet.objects.get(user_id=request.user.id)
+        except ObjectDoesNotExist:
+            return Response("Кошелёк не найден", status=status.HTTP_404_NOT_FOUND)
+        data = self.serializer_class(current_wallet).data
         return Response(data, status=status.HTTP_200_OK)
 
 
 # A view for reading the number of followers
 class NumberOfFollowersView(APIView):
+    serializer_class = None
     permission_classes = (permissions.AllowAny,)
 
     def get(self, request):
         user_id = request.data['user_id']
         number_of_followers = len(Followers.objects.filter(user_id=user_id))
-        return Response({"user_id": user_id, "number_of_followers": number_of_followers},
-                        status=status.HTTP_200_OK)
+        data = {"user_id": user_id, "number_of_followers": number_of_followers}
+        return Response(data, status=status.HTTP_200_OK)
 
 
 # A view for getting, adding and deleting followers
 class FollowersGetAddDeleteView(APIView):
+    serializer_class = FollowersSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
         user_id = request.data['user_id']
         follower_id = request.user.id
-        current_follower = Followers.objects.filter(user_id=user_id, follower=follower_id)
-        if len(current_follower) != 0:
-            data = CustomFollowersSerializer(current_follower[0]).data
-            return Response(data, status=status.HTTP_200_OK)
-        else:
-            return Response({"message": "Пользователь не подписан на данного пользователя"},
-                            status=status.HTTP_400_BAD_REQUEST)
+        try:
+            current_follower = Followers.objects.get(user_id=user_id, follower=follower_id)
+        except ObjectDoesNotExist:
+            return Response("Подписка не найдена", status=status.HTTP_204_NO_CONTENT)
+        data = self.serializer_class(current_follower).data
+        return Response(data, status=status.HTTP_200_OK)
 
     #  for adding
     def post(self, request):
         user_id = request.data['user_id']
         follower_id = request.user.id
         data = {"user_id": user_id, "follower": follower_id}
-        serializer = CustomFollowersSerializer(data=data)
+        serializer = self.serializer_class(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
@@ -58,20 +62,23 @@ class FollowersGetAddDeleteView(APIView):
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
-        Followers.objects.get(user_id=request.data['user_id'], follower=request.user.id).delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        try:
+            Followers.objects.get(user_id=request.data['user_id'], follower=request.user.id).delete()
+        except ObjectDoesNotExist:
+            pass
+        return Response(status=status.HTTP_200_OK)
 
 
 # a view for changing and adding data to a resume
 class UserResumeEditView(APIView):
-    serializers_class = serializers.CustomResumeSerializer
-    permissions_classes = (permissions.IsAuthenticated)
+    serializers_class = ResumeSerializer
+    permission_classes = (permissions.IsAuthenticated, )
 
     #  for adding
     def post(self, request):
         data = dict(request.data)
         data["user_id"] = request.user.id
-        serializer = CustomResumeSerializer(data=data)
+        serializer = self.serializers_class(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
@@ -80,8 +87,13 @@ class UserResumeEditView(APIView):
 
     # for changing
     def put(self, request):
-        instance = Resume.objects.get(user_id=request.user.id)
-        serializer = CustomResumeSerializer(instance, data=request.data)
+        try:
+            instance = Resume.objects.get(user_id=request.user.id)
+        except ObjectDoesNotExist:
+            return Response("Резюме для изменения не найдено", status=status.HTTP_404_NOT_FOUND)
+        data = dict(request.data)
+        data["user_id"] = request.user.id
+        serializer = self.serializers_class(instance, data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
@@ -91,29 +103,36 @@ class UserResumeEditView(APIView):
 
 # view for reading a resume
 class UserResumeGetView(APIView):
-    serializers_class = serializers.CustomResumeSerializer
-    permissions_classes = (permissions.AllowAny)
+    serializers_class = ResumeSerializer
+    permission_classes = (permissions.AllowAny, )
 
     # for getting
     def get(self, request):
-        resume = Resume.objects.get(user_id=request.data["user_id"])
-        data = CustomResumeSerializer(resume).data
-
+        try:
+            resume = Resume.objects.get(user_id=request.data["user_id"])
+        except ObjectDoesNotExist:
+            return Response("Резюме не найдено", status=status.HTTP_404_NOT_FOUND)
+        data = self.serializers_class(resume).data
         return Response(data, status=status.HTTP_200_OK)
 
 
-# View for changing and adding a profession
-class ProfessionsEdit(APIView):
+# View for changing, reading and adding a profession
+class ProfessionsEditView(APIView):
+    serializers_class = ProfessionsSerializer
+    permission_classes = (permissions.IsAuthenticated, ) # TODO change this
 
     # Method for getting profession by id
     def get(self, request):
-        profession = Professions.objects.get(id=request.data['id'])
-        serializer = ProfessionsSerializer(profession)
+        try:
+            profession = Professions.objects.get(id=request.data['id'])
+        except ObjectDoesNotExist:
+            return Response("Профессия не найдена", status=status.HTTP_404_NOT_FOUND)
+        serializer = self.serializers_class(profession)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # Method for adding profession
     def post(self, request):
-        serializer = ProfessionsSerializer(data=request.data)
+        serializer = self.serializers_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -122,8 +141,11 @@ class ProfessionsEdit(APIView):
 
     # Method for changing profession by id
     def put(self, request):
-        profession = Professions.objects.get(id=request.data['id'])
-        serializer = ProfessionsSerializer(profession, data=request.data)
+        try:
+            profession = Professions.objects.get(id=request.data['id'])
+        except ObjectDoesNotExist:
+            return Response("Профессия для изменения не найдена", status=status.HTTP_404_NOT_FOUND)
+        serializer = self.serializers_class(profession, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -132,12 +154,18 @@ class ProfessionsEdit(APIView):
 
     # Method for deliting profession by id
     def delete(self, request):
-        Professions.objects.get(id=request.data['id']).delete()
+        try:
+            Professions.objects.get(id=request.data['id']).delete()
+        except ObjectDoesNotExist:
+            pass
         return Response(status=status.HTTP_200_OK)
 
 
 # View for getting all professions
-class ProfessionsGet(APIView):
+class ProfessionsGetView(APIView):
+    serializers_class = ProfessionsSerializer
+    permission_classes = (permissions.AllowAny, )
+
     # Method for getting all professions
     def get(self, request):
         professions = Professions.objects.all()
@@ -146,17 +174,21 @@ class ProfessionsGet(APIView):
 
 
 # View for changing and adding a city
-class CitiesEdit(APIView):
-
+class CitiesEditView(APIView):
+    serializers_class = CitiesSerializer
+    permission_classes = (permissions.IsAuthenticated, ) # TODO change this
     # Method for getting city by id
     def get(self, request):
-        city = Cities.objects.get(id=request.data['id'])
-        serializer = CitiesSerializer(city)
+        try:
+            city = Cities.objects.get(id=request.data['id'])
+        except ObjectDoesNotExist:
+            return Response("Город не найден", status=status.HTTP_404_NOT_FOUND)
+        serializer = self.serializers_class(city)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # Method for adding city by id
     def post(self, request):
-        serializer = CitiesSerializer(data=request.data)
+        serializer = self.serializers_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -165,8 +197,11 @@ class CitiesEdit(APIView):
 
     # Method for changing city by id
     def put(self, request):
-        city = Cities.objects.get(id=request.data['id'])
-        serializer = CitiesSerializer(city, data=request.data)
+        try:
+            city = Cities.objects.get(id=request.data['id'])
+        except ObjectDoesNotExist:
+            return Response("Город для изменения не найден", status=status.HTTP_404_NOT_FOUND)
+        serializer = self.serializers_class(city, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -175,38 +210,43 @@ class CitiesEdit(APIView):
 
     # Method for deliting city by id
     def delete(self, request):
-        Cities.objects.get(id=request.data['id']).delete()
+        try:
+            Cities.objects.get(id=request.data['id']).delete()
+        except ObjectDoesNotExist:
+            pass
         return Response(status=status.HTTP_200_OK)
 
 
 # View for getting all cities
-class CitiesGet(APIView):
-
+class CitiesGetView(APIView):
+    serializers_class = CitiesSerializer
+    permission_classes = (permissions.AllowAny, ) # TODO change this
     # Method for getting all cities
     def get(self, request):
         cities = Cities.objects.all()
-        serializer = CitiesSerializer(cities, many=True)
+        serializer = self.serializers_class(cities, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+# View for getting, creating and deleting like
 class LikesGetDeleteView(APIView):
+    serializers_class = LikesSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
         user_id = request.user.id
         post_id = request.data['post_id']
-        current_Likes = Likes.objects.filter(user_id=user_id, post_id=post_id)
-        if len(current_Likes) != 0:
-            data = LikesSerializer(current_Likes[0]).data
-            return Response(data, status=status.HTTP_200_OK)
-        else:
-            return Response({"message": "Лайков нема"},
-                            status=status.HTTP_400_BAD_REQUEST)
+        try:
+            current_like = Likes.objects.get(user_id=user_id, post_id=post_id)
+        except ObjectDoesNotExist:
+            return Response("Лайк не поставлен", status=status.HTTP_204_NO_CONTENT)
+        data = self.serializers_class(current_like).data
+        return Response(data, status=status.HTTP_200_OK)
 
     def post(self, request):
         user_id = request.user.id
         post_id = request.data['post_id']
         data = {"user_id": user_id, "post_id": post_id}
-        serializer = LikesSerializer(data=data)
+        serializer = self.serializers_class(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
@@ -214,33 +254,39 @@ class LikesGetDeleteView(APIView):
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
-        Likes.objects.get(user_id=request.user.id, post_id=request.data['post_id']).delete()
+        try:
+            Likes.objects.get(user_id=request.user.id, post_id=request.data['post_id']).delete()
+        except ObjectDoesNotExist:
+            pass
         return Response(status=status.HTTP_204_NO_CONTENT)
       
 
 # A view for getting all users posts
-class AllUserPostsGetView(APIView):
+class GetAllUserPostsView(APIView):
+    serializers_class = PostSerializer
     permission_classes = (permissions.AllowAny,)
 
     def get(self, request):
         user_id = request.data['user_id']
         current_posts = Post.objects.filter(user_id=user_id)
-        data = CustomPostSerializer(current_posts, many=True).data
-        new_data = []
+        data = self.serializers_class(current_posts, many=True).data
         for dic in data:
             dic["likes"] = len(Likes.objects.filter(post_id=dic["id"]))
-            new_data.append(dic)
-        return Response(new_data, status=status.HTTP_200_OK)
+        return Response(data=data, status=status.HTTP_200_OK)
 
 
 # A view for getting all information about post
 class PostGetView(APIView):
+    serializers_class = PostSerializer
     permission_classes = (permissions.AllowAny,)
 
     def get(self, request):
         post_id = request.data['id']
-        current_post = Post.objects.get(id=post_id)
-        data = CustomPostSerializer(current_post).data
+        try:
+            current_post = Post.objects.get(id=post_id)
+        except ObjectDoesNotExist:
+            return Response("Пост не найден", status=status.HTTP_404_NOT_FOUND)
+        data = self.serializers_class(current_post).data
         data["id"] = post_id
         data["likes"] = len(Likes.objects.filter(post_id=post_id))
         return Response(data, status=status.HTTP_200_OK)
@@ -248,13 +294,13 @@ class PostGetView(APIView):
 
 # a view for changing, adding and deleting data to a post
 class PostEditView(APIView):
-    permissions_classes = (permissions.IsAuthenticated)
+    serializers_class = PostSerializer
+    permissions_classes = (permissions.IsAuthenticated, )
 
     def post(self, request):
         data = dict(request.data)
-        user_id = request.user.id
-        data["user_id"] = user_id
-        serializer = CustomPostSerializer(data=data)
+        data["user_id"] = request.user.id
+        serializer = self.serializers_class(data=data)
         if serializer.is_valid():
             serializer.save()
             response_data = dict(serializer.data)
@@ -264,10 +310,13 @@ class PostEditView(APIView):
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
-        instance = Post.objects.get(id=request.data["id"], user_id=request.user.id)
+        try:
+            instance = Post.objects.get(id=request.data["id"], user_id=request.user.id)
+        except ObjectDoesNotExist:
+            return Response("Пост для изменения не найден", status=status.HTTP_404_NOT_FOUND)
         data = dict(request.data)
         data["user_id"] = request.user.id
-        serializer = CustomPostSerializer(instance, data=data)
+        serializer = self.serializers_class(instance, data=data)
         if serializer.is_valid():
             serializer.save()
             response_data = dict(serializer.data)
@@ -277,18 +326,22 @@ class PostEditView(APIView):
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
-        Post.objects.get(id=request.data['id'], user_id=request.user.id).delete()
+        try:
+            Post.objects.get(id=request.data['id'], user_id=request.user.id).delete()
+        except ObjectDoesNotExist:
+            pass
         return Response(status=status.HTTP_204_NO_CONTENT)
       
-# View for getting comment! adding, getting, changing comment by authorize user
-class CommentEdit(APIView):
+# View for getting comment! adding, changing and deleting comment by authorize user
+class CommentEditView(APIView):
+    serializers_class = CommentSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
     # Method for adding comment
     def post(self, request):
         data = dict(request.data)
         data["user_id"] = request.user.id
-        serializer = CommentSerializer(data=data)
+        serializer = self.serializers_class(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data,
@@ -299,12 +352,17 @@ class CommentEdit(APIView):
 
     # Method for changing comment
     def put(self, request):
-        comment = Comment.objects.get(id=request.data['id'],
+        try:
+            comment = Comment.objects.get(id=request.data['id'],
                                       user_id=request.user.id,
                                       post_id=request.data['post_id'])
+        except ObjectDoesNotExist:
+            return Response(
+                "Не найден комментарий или авторизованный пользователь не является автором данного комментария",
+                status=status.HTTP_404_NOT_FOUND)
         data = dict(request.data)
         data["user_id"] = request.user.id
-        serializer = CommentSerializer(comment, data=data)
+        serializer = self.serializers_class(comment, data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -314,28 +372,36 @@ class CommentEdit(APIView):
 
     # Method for deleting comment by id
     def delete(self, request):
-        Comment.objects.get(id=request.data['id'], 
+        try:
+            Comment.objects.get(id=request.data['id'],
                             user_id=request.user.id).delete()
+        except ObjectDoesNotExist:
+            pass
         return Response(status=status.HTTP_200_OK)
 
 
 # View for getting all comments
-class CommentsGet(APIView):
+class CommentsGetView(APIView):
+    serializers_class = CommentSerializer
     permission_classes = (permissions.AllowAny,)
 
     # Method for getting all comments
     def get(self, request):
         comments = Comment.objects.filter(post_id=request.data['post_id'])
-        serializer = CommentSerializer(comments, many=True)
+        serializer = self.serializers_class(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
  
 
 # View for getting comment
-class CommentGet(APIView):
+class CommentGetView(APIView):
+    serializers_class = CommentSerializer
     permission_classes = (permissions.AllowAny,)
 
     # Method for getting comment by id
     def get(self, request):
-        comment = Comment.objects.get(id=request.data['id'])
-        serializer = CommentSerializer(comment)
+        try:
+            comment = Comment.objects.get(id=request.data['id'])
+        except ObjectDoesNotExist:
+            return Response("Комментарий не найден", status=status.HTTP_404_NOT_FOUND)
+        serializer = self.serializers_class(comment)
         return Response(serializer.data, status=status.HTTP_200_OK)

@@ -37,32 +37,39 @@ function LoginPage() {
 
     return (
         displayAuthForm&&
-        <>
-        <div id="main" className="flex  mr-auto ml-auto justify-content-center align-items-center">
-            <div className="flex"></div>
-            <div className="flex align-items-center justify-content-center">
-                <div>
-                    <img id="notebook" src="/notebook.png"/>
-                    <img id="inside_notebook" src="/img.png"/>
-                </div>
-                <div id="iconicFull" className="m-5">
-                    <div id="iconicLabel" className="container">
-                        <p id="iconicTitle" className="ml-4 ml-10">Iconic</p>
-                        <p id="iconicText" >про твою уникальность</p>
+        <section id="main" className="">
+            <div id="main" className="flex  mr-auto ml-auto justify-content-center align-items-center">
+                <Head>
+                    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+                    <link href="https://fonts.googleapis.com/css2?family=Birthstone+Bounce&display=swap"
+                          rel="stylesheet"/>
+                    <link href="http://fonts.cdnfonts.com/css/gotham-pro?styles=24951" rel="stylesheet"/>
+                </Head>
+                <div className="flex"></div>
+                <div className="flex align-items-center justify-content-center">
+                    <div>
+                        <img id="notebook" src="/notebook.png"/>
+                        <img id="inside_notebook" className="hover:animate-popik" src="/img.png"/>
                     </div>
-                    <div id="but" className="container">
-                        <form action="/login">
-                            <button className="butEntrance ml-14">Войти</button>
-                        </form>
-                        <form action="/registration">
-                            <button className="butReg ml-14 m-5">Зарегистрироваться</button>
-                        </form>
+                    <div id="iconicFull" className="ml-12 ">
+                        <div id="iconicLabel" className="">
+                            <p id="iconicTitle" className="ml-4 ml-10 hover:animate-waving-hand">Iconic</p>
+                            <p id="iconicText">про твою уникальность</p>
+                        </div>
+                        <div id="but" className="container">
+                            <form action="/login">
+                                <button className="butEntrance ml-14">Войти</button>
+                            </form>
+                            <form action="/registration">
+                                <button className="butReg ml-14 m-5">Зарегистрироваться</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                <div className="flex"></div>
             </div>
-            <div className="flex"></div>
-        </div>
-    </>
+        </section>
      )
 
   }
