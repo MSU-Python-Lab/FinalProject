@@ -146,7 +146,7 @@ function Index() {
       file:text-sm file:font-semibold
       file:bg-[#148206D] file:text-white
       hover:file:bg-[#1482908D]"/>
-                                {/*<img width={240} height={185} src="/img/posts/windowform.jpg" alt=""/>*/}
+                                {/*<img width={240} height={185} src="/img/posts/windowform.jpg" alt=""/>*/ }
                             </div>
                         </div>
                         <div className="">

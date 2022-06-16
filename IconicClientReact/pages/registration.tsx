@@ -89,7 +89,7 @@ function registrationPage() {
                                     <div className="flex">
                                         <label className="font-medium ml-4 py-5 text-gray-900">Телефон</label>
                                         <input type="text"
-                                               id="bl4" className="block ml-7 w-full px-4 py-3 mt-2 text-xl placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-[#148290] rounded-2xl"
+                                               id="bl4" className="block ml-7 w-full px-4 py-3 mt-2 text-xl  placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-[#148290] rounded-2xl"
                                                onChange={(e) => setPhone(e.target.value)} value={phone}/>
                                     </div>
                                     <div className="flex">
