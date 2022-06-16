@@ -64,10 +64,10 @@ function registrationPage() {
                             </div>
                         </div>
 
-                        <div className="w-full bg-white mr-20 lg:w-6/12 xl:w-1/2">
-                            <div className="flex flex-col items-start justify-end w-full h-full p-10 lg:p-16 xl:p-24">
-                                <h4  id="reg" className="w-full text-3xl ml-56 font-bold">Регистрация</h4>
-                                <div  className="relative w-full mt-5 space-y-3">
+                        <div className="w-full bg-white mr-20 lg:w-6/12 xl:w-1/2 md:mr-0">
+                            <div className="flex flex-col items-start justify-center w-full h-full p-10 lg:p-16 xl:p-24">
+                                <h4  id="reg" className="w-full text-3xl ml-56 font-bold md:ml-40">Регистрация</h4>
+                                <div  className="relative w-full mt-5 space-y-3 md:space-y-1">
 
                                     <div className="flex">
                                         <label className="font-medium ml-9 py-5 text-gray-900">Логин</label>
@@ -111,9 +111,9 @@ function registrationPage() {
                                                id="bl7" className="block w-full px-4 py-3 mt-2 text-xl placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-[#148290] rounded-2xl"
                                                onChange={(e) => setPassword2(e.target.value)} value={password2}/>
                                     </div>
-                                    <div className="relative ml-52 py-3">
+                                    <div className="relative ml-52 py-3 md:ml-44">
                                         <button onClick={successReg}
-                                                className="inline-block px-5 py-3 text-lg font-medium text-center text-white transition duration-200 bg-[#148290] hover:bg-cyan-900 ease rounded-2xl">Зарегистрироваться
+                                                className="inline-block px-5 py-3 text-lg font-medium text-center text-white transition duration-200 bg-[#148290] hover:bg-cyan-900 ease rounded-2xl md:text-sm">Зарегистрироваться
                                         </button>
                                     </div>
                                 </div>

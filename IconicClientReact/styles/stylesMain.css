@@ -1,14 +1,30 @@
-header {
+Header {
     font-family: 'Gotham Pro', sans-serif;
     background: rgba(20, 130, 144, 0.3);
     border-radius: 0;
     position: absolute;
+
     width: 100%;
     height: 85px;
     left: 0;
     top: 0;
 }
+.buttonicon{
+    position: absolute;
+    width: 143px;
+    height: 67px;
+    left: 208px;
+    top: 0px;
 
+    font-family: 'Birthstone Bounce', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 62px;
+    line-height: 84px;
+
+    color: #383434;
+
+}
 .HeaderIcon{
     justify-content: space-between;
 
@@ -25,30 +41,42 @@ header {
 }
 
 .headerLeft{
-    margin-left: 100px;
-    margin-top: 20px;
-
 
 }
 
 .m{
-    margin-top: 85px;
+
 }
 .search-block {
-    width: 290px;
-    height: 35px;
-    left: 500px;
-    top: 25px;
-    background-color: #FFFFFF;
-    border: 1px solid #FFFFFF;
-    border-radius: 10px
+
 }
 input{
-    border: 0;
-    margin-bottom: 1px;
-    margin-left: 48px;
-    font-size: 17px ;
-    font-family: "Gotham Pro", ui-monospace ;
+    position: absolute;
+    width: 292px;
+    height: 35px;
+    left: 548px;
+    top: 25px;
+
+    background: #FFFFFF;
+    border-radius: 10px;
+
+    font-family: 'Gotham Pro';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 16px;
+
+    color: rgba(56, 52, 52, 0.5);
+
+}
+.fa{
+    position: absolute;
+    width: 29px;
+    height: 29px;
+    left: 643px;
+    top: 28px;
+
+
 }
 
 Body{

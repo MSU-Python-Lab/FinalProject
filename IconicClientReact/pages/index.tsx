@@ -9,7 +9,7 @@ import {logout} from "../helpers/AuthHelper";
 //токен можно удалить из браузера для тестов
 
 function Index() {
-    const [modalActive, setModalActive]=useState(false)
+    const [modalActive, setModalActive] = useState(false)
     //const [out,setOut]=useState(false)
     // useEffect(() => {
     //
@@ -28,104 +28,152 @@ function Index() {
     //     }
     // }
 
+    return (
+        <div className="container mx-auto">
+            <div id="Header" className="flex border w-full h-20 mb-10 bg-[#1482904D]">
+                <div
+                    className="w-2/5 ml-44 mt-2 text-6xl font-sans text-gray-900 xl:text-6xl px-333 relative justify-between">
+                    <h2>Iconic </h2>
+                </div>
+                <div className="flex w-2/4 mr-28 justify-between">
+                    <div className="mt-6 ">
+                        <label className="form-control block w-full px-10 py-1 text-base font-normal text-gray-700 bg-white
 
-
-    return(
-        <div>
-            <div>
-                <div className="w-full space-y-5 md:w-3/5 md:pr-16">
-                    <button className="w-full px-3 py-4 font-medium text-white bg-indigo-600 rounded-full hover:bg-indigo-500 transition 0.4s" onClick={() => setModalActive(true)}>Модальное окно для резюме</button>
+        rounded
+        transition
+        focus:bg-white focus:border-blue-600
+      ">
+                            <input placeholder="Поиск..."/>
+                        </label>
+                        {/*<img src="/img/magnifier1.svg" alt="Search"/>*/}
+                    </div>
+                </div>
+                <div className="flex w-1/4 mr-2 mt-3 justify-between align-middle list-none">
+                    <li className="">
+                        <button>
+                            <img className="" width={30} height={30} src="/img/user_button.svg"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button>
+                            <img className="" width={30} height={30} src="/img/massage_button.svg"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button>
+                            <img className="" width={30} height={30} src="/img/notifications_button.svg"/>
+                        </button>
+                    </li>
+                    <li>
+                        <button>
+                            <img className="" width={30} height={30} src="/img/settings_button.svg"/>
+                        </button>
+                    </li>
                 </div>
             </div>
+            <div className="flex flex-auto">
+                <div id="sidebar" className="flex flex-col justify-between ml-36 ">
+                    <div className="">
+                        <img className="rounded-full p-2 hover:p-0 ease-in duration-300 w-52" src="/img/photo.jpg"/>
+                        <div className="flex justify-center mr-24">
+                            <h1 className="align-center justify-center"> katya_photovl</h1>
+                        </div>
+                    </div>
+                    <div className="list-none flex flex-auto grid grid-cols-1 gap-4 mb-auto mt-2 py-3">
+                        <li>
+                            <button className="text-base font-semibold text-amber-50 bg-[#1482904D] bg-clip-padding
+                            border-solid border-gray-300 m-0 focus:text-gray-700 focus: focus:border-blue-600
+                            focus:outline-none d-flex align-center justify-center w-60">Подписчики
+                            </button>
+                        </li>
+                        <li>
+                            <button className="text-base font-semibold text-amber-50 bg-[#1482904D] bg-clip-padding
+                             border-solid border-gray-300 m-0 focus:text-gray-700 focus: focus:border-blue-600
+                             focus:outline-none d-flex align-center justify-center w-60">Подписки
+                            </button>
+                        </li>
+                        <li>
+                            <button className="text-base font-semibold text-amber-50 bg-[#1482904D] bg-clip-padding
+                             border-solid border-gray-300 m-0 focus:text-gray-700 focus: focus:border-blue-600
+                             focus:outline-none d-flex align-center justify-center w-60">Кошелёк
+                            </button>
+                        </li>
+                        <li>
+                            <button className="text-base font-semibold text-amber-50 bg-[#1482904D] bg-clip-padding
+                            border-solid border-gray-300 m-0  focus:text-gray-700 focus: focus:border-blue-600
+                            focus:outline-none d-flex align-center justify-center w-60"
+                                    onClick={() => setModalActive(true)}>Резюме
+                            </button>
+                        </li>
+                        <li>
+                            <button className="text-base font-bold text-amber-50 bg-[#1482908D] bg-clip-padding
+                            border-solid border-gray-300 m-0 focus:text-gray-700 focus: focus:border-blue-600
+                            focus:outline-none d-flex align-center justify-center ml-3 w-52">Подписаться
+                            </button>
+                        </li>
+                    </div>
 
-
-
-            {/*Здесь Анин код, который неправильно отображается*/}
-
-            {/*<div>*/}
-
-            {/*<div className="Wrapper clear"/>*/}
-            {/*<header className="d-flex justify-between">*/}
-            {/*<div className="d-flex align-center ml-50 mt-10">*/}
-            {/*<img width={135} height={60} src="/img/logo_button.svg"/>*/}
-            {/*</div>*/}
-            {/*<div className="search-block d-flex align-center justify-center mt-25">*/}
-            {/*<img width={29} height={29} src="/img/magnifier1.svg" alt="Search"/>*/}
-            {/*<input placeholder="Поиск..."/>*/}
-
-            {/*</div>*/}
-            {/*<ul className="HeaderIcon d-flex justify-between">*/}
-            {/*<li className="mr-30 mt-30">*/}
-            {/*<img className="mr-30" width={30} height={30} src="/img/user_button.svg"/>*/}
-            {/*<img className="mr-30" width={30} height={30} src="/img/massage_button.svg"/>*/}
-            {/*<img className="mr-30" width={30} height={30} src="/img/notifications_button.svg"/>*/}
-            {/*<img className="mr-30" width={30} height={30} src="/img/settings_button.svg"/>*/}
-            {/*</li>*/}
-            {/*</ul>*/}
-            {/*</header>*/}
-            {/*<hr className="m"/>*/}
-            {/*<div>*/}
-            {/*<div>*/}
-            {/*<img className="photo" src="/img/photo.jpg" />*/}
-            {/*<h1 className="name"> katya_photovl</h1>*/}
-
-            {/*<li>*/}
-            {/*<button className="followers d-flex align-center justify-center">Подписчики</button>*/}
-            {/*</li>*/}
-            {/*<li>*/}
-            {/*<button className="following d-flex align-center justify-center">Подписки</button>*/}
-            {/*</li>*/}
-            {/*<li>*/}
-            {/*<button className="money d-flex align-center justify-center">Кошелёк</button>*/}
-            {/*</li>*/}
-            {/*<li>*/}
-            {/*<button className="resume d-flex align-center justify-center hover:bg-indigo-500" onClick={() => setModalActive(true)}>(Модальное окно для будущего резюме) Резюме</button>*/}
-            {/*</li>*/}
-            {/*<li>*/}
-            {/*<button className="follow d-flex align-center justify-center ">Подписаться</button>*/}
-            {/*</li>*/}
-
-            {/*</div>*/}
-            {/*<div className="content d-flex"/>*/}
-            {/*<div className="posts d-flex justify-between align-center"/>*/}
-            {/*<div className="responsive">*/}
-            {/*<div className="gallery">*/}
-            {/*<img width={240} height={185} src="/img/posts/pic1.jpg" alt="" />*/}
-            {/*</div>*/}
-            {/*</div>*/}
-            {/*<div className="responsive">*/}
-            {/*<div className="gallery">*/}
-            {/*<img width={240} height={185} src="/img/posts/pic2.jpg" alt="" />*/}
-            {/*</div>*/}
-            {/*</div>*/}
-            {/*<div className="responsive">*/}
-            {/*<div className="gallery">*/}
-            {/*<img width={240} height={185} src="/img/posts/pic3.jpg" alt="" />*/}
-            {/*</div>*/}
-            {/*</div>*/}
-            {/*<div className="responsive">*/}
-            {/*<div className="gallery">*/}
-            {/*<img width={240} height={185} src="/img/posts/pic4.jpg" alt="" />*/}
-            {/*</div>*/}
-            {/*</div>*/}
-            {/*    </div>*/}
-        {/*<div>*/}
-        {/*<img width={240} height={185} src="/img/posts/pic2.jpg" alt="" />*/}
-        {/*</div>*/}
-        {/*<div>*/}
-        {/*<img width={240} height={185} src="/img/posts/pic3.jpg" alt="" />*/}
-        {/*</div>*/}
-        {/*<div>*/}
-        {/*<img width={240} height={185} src="/img/posts/pic4.jpg" alt="" />*/}
-        {/*</div>*/}
-        {/*        </div>*/}
-            <Modal active={modalActive} setActive={setModalActive}>
-                <p>Здесь будет резюме</p>
-
-            </Modal>
-
+                </div>
+                <div className="flex flex-col">
+                </div>
+                <div id="content" className="auto-cols-auto  grid-rows-none">
+                    <div className="d-flex grid grid-cols-3 gap-4 justify-between align-center mr-28 ml-36 p-1">
+                        <div className="">
+                            <div className="">
+                                <img width={240} height={185} className="p-2 hover:animate-myanim" src="/img/posts/pic1.jpg" alt=""/>
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="">
+                                <img width={240} height={185} className="p-2 hover:animate-myanim" src="/img/posts/pic2.jpg" alt=""/>
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="">
+                                <img width={240} height={185} className="p-2 hover:animate-myanim" src="/img/posts/pic3.jpg" alt=""/>
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="rounded-full">
+                                <img width={240} height={185}  className="p-2 hover:animate-myanim" src="/img/posts/pic4.jpg" alt=""/>
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="">
+                                <input name="file" type="file" className="block w-full text-sm text-state-500
+      file:mr-6 file:py-16 file:px-6
+      file:rounded file:border-0
+      file:text-sm file:font-semibold
+      file:bg-[#148206D] file:text-white
+      hover:file:bg-[#1482908D]"/>
+                                {/*<img width={240} height={185} src="/img/posts/windowform.jpg" alt=""/>*/}
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="">
+                                <img width={240} height={185} src="/img/posts/windowform.jpg" alt=""/>
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="">
+                                <img width={240} height={185} src="/img/posts/windowform.jpg" alt=""/>
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="">
+                                <img width={240} height={185} src="/img/posts/windowform.jpg" alt=""/>
+                            </div>
+                        </div>
+                        <div className="">
+                            <div className="">
+                                <img width={240} height={185} src="/img/posts/windowform.jpg" alt=""/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
     )
 }
-export default withAuth(Index)
+
+export default Index
