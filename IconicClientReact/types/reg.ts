@@ -4,7 +4,6 @@ export interface Reg {
     preuser: { success: any, data: any }
 }
 
-
 export interface RegState {
     preuser: Reg
     loading: boolean;

@@ -32,8 +32,8 @@ function LoginPage() {
     //         await router.push('/')
     //     }
     // }
-    function successLogin() {
-        getAuthUser(email, password)
+     function successLogin() {
+         getAuthUser(email, password)
     }
 
     return (

@@ -5,7 +5,7 @@ import Modal from "../components/ModalWindow/Modal"
 import {logout} from "../helpers/AuthHelper";
 import {useRouter} from "next/router"
 import {getAuthUser} from "../core/actions/GETAuthUser";
-import {putAuthUser} from "../core/actions/PUTAuth";
+
 
 function Index() {
     const {payments} = getAuthUser()
