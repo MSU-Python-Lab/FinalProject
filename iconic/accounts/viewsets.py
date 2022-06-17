@@ -1,6 +1,11 @@
 from django.contrib.auth import get_user_model
 from rest_framework import permissions, viewsets
 
+import sys
+sys.path.append('../')
+# IDE says that there is unresolved references, but ignore it
+from UserProfile.serializers import WalletSerializer
+
 from . import serializers
 
 CustomUser = get_user_model()
@@ -14,5 +19,9 @@ class CustomUserModelViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         instance = serializer.save()
-        instance.set_password(instance.password)
-        instance.save()
+        data = dict()
+        data["user_id"] = instance.id
+        data["total_amount"] = 0
+        wal_ser = WalletSerializer(data=data)
+        wal_ser.is_valid()
+        wal_ser.save()
