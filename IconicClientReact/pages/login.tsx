@@ -40,7 +40,7 @@ function LoginPage() {
         displayAuthForm &&
         <section>
             <div id="dev0">
-                <p className="iconic w-80 ml-[41%] h-20 hover:animate-waving-hand">Iconic</p>
+                <p className="iconic w-80 ml-[39%] h-20 hover:animate-waving-hand">Iconic</p>
                 <p className="text_number mt-20">Введите номер</p>
                 <p className="text_number text_dop">Ваш номер телефона будет<br/> использоваться для входа в аккаунт</p>
                 <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)}
